@@ -1,0 +1,175 @@
+{
+  "source": {
+    "imported_at": "2026-07-27T10:58:29Z",
+    "name": "Toronto Police Service Community Safety Indicators",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/6909ea60-ef0e-465f-b5d0-43106b6b9130/resource/174089c6-5a1a-42a5-8937-f9f25c72700a/download/community-safety-indicators.csv"
+  },
+  "summary": {
+    "duplicate_rows_removed": 31003,
+    "rows_in_year_range_before_dedupe": 420617,
+    "rows_skipped_outside_year_range": 65587,
+    "rows_skipped_unparseable_year": 0,
+    "rows_written": 389614,
+    "source_rows_read": 486204
+  },
+  "year_range": {
+    "end": 2026,
+    "start": 2016
+  },
+  "years": {
+    "2016": {
+      "categories": {
+        "Assault": 17329,
+        "Auto Theft": 3232,
+        "Break and Enter": 6428,
+        "Robbery": 3177,
+        "Theft Over": 1052
+      },
+      "file": "data/crimes/tps-csi-2016.md",
+      "max_report_date": "2016-12-31",
+      "min_report_date": "2016-01-01",
+      "missing_coordinates": 465,
+      "rows": 31218
+    },
+    "2017": {
+      "categories": {
+        "Assault": 17581,
+        "Auto Theft": 3503,
+        "Break and Enter": 6921,
+        "Robbery": 3445,
+        "Theft Over": 1190
+      },
+      "file": "data/crimes/tps-csi-2017.md",
+      "max_report_date": "2017-12-31",
+      "min_report_date": "2017-01-01",
+      "missing_coordinates": 537,
+      "rows": 32640
+    },
+    "2018": {
+      "categories": {
+        "Assault": 18222,
+        "Auto Theft": 4479,
+        "Break and Enter": 7605,
+        "Robbery": 3266,
+        "Theft Over": 1260
+      },
+      "file": "data/crimes/tps-csi-2018.md",
+      "max_report_date": "2018-12-31",
+      "min_report_date": "2018-01-01",
+      "missing_coordinates": 550,
+      "rows": 34832
+    },
+    "2019": {
+      "categories": {
+        "Assault": 19271,
+        "Auto Theft": 4882,
+        "Break and Enter": 8534,
+        "Robbery": 3193,
+        "Theft Over": 1395
+      },
+      "file": "data/crimes/tps-csi-2019.md",
+      "max_report_date": "2019-12-31",
+      "min_report_date": "2019-01-01",
+      "missing_coordinates": 848,
+      "rows": 37275
+    },
+    "2020": {
+      "categories": {
+        "Assault": 16750,
+        "Auto Theft": 5292,
+        "Break and Enter": 6974,
+        "Robbery": 2430,
+        "Theft Over": 1228
+      },
+      "file": "data/crimes/tps-csi-2020.md",
+      "max_report_date": "2020-12-31",
+      "min_report_date": "2020-01-01",
+      "missing_coordinates": 537,
+      "rows": 32674
+    },
+    "2021": {
+      "categories": {
+        "Assault": 17873,
+        "Auto Theft": 6064,
+        "Break and Enter": 5729,
+        "Robbery": 1984,
+        "Theft Over": 1079
+      },
+      "file": "data/crimes/tps-csi-2021.md",
+      "max_report_date": "2021-12-31",
+      "min_report_date": "2021-01-01",
+      "missing_coordinates": 539,
+      "rows": 32729
+    },
+    "2022": {
+      "categories": {
+        "Assault": 19691,
+        "Auto Theft": 8844,
+        "Break and Enter": 6062,
+        "Robbery": 2431,
+        "Theft Over": 1481
+      },
+      "file": "data/crimes/tps-csi-2022.md",
+      "max_report_date": "2022-12-31",
+      "min_report_date": "2022-01-01",
+      "missing_coordinates": 659,
+      "rows": 38509
+    },
+    "2023": {
+      "categories": {
+        "Assault": 22579,
+        "Auto Theft": 11275,
+        "Break and Enter": 7601,
+        "Robbery": 2725,
+        "Theft Over": 1735
+      },
+      "file": "data/crimes/tps-csi-2023.md",
+      "max_report_date": "2023-12-31",
+      "min_report_date": "2023-01-01",
+      "missing_coordinates": 434,
+      "rows": 45915
+    },
+    "2024": {
+      "categories": {
+        "Assault": 23814,
+        "Auto Theft": 8666,
+        "Break and Enter": 6799,
+        "Robbery": 2772,
+        "Theft Over": 1871
+      },
+      "file": "data/crimes/tps-csi-2024.md",
+      "max_report_date": "2024-12-31",
+      "min_report_date": "2024-01-01",
+      "missing_coordinates": 508,
+      "rows": 43922
+    },
+    "2025": {
+      "categories": {
+        "Assault": 23202,
+        "Auto Theft": 6445,
+        "Break and Enter": 6057,
+        "Robbery": 2230,
+        "Theft Over": 1938
+      },
+      "file": "data/crimes/tps-csi-2025.md",
+      "max_report_date": "2025-12-31",
+      "min_report_date": "2025-01-01",
+      "missing_coordinates": 504,
+      "rows": 39872
+    },
+    "2026": {
+      "categories": {
+        "Assault": 11617,
+        "Auto Theft": 3387,
+        "Break and Enter": 3015,
+        "Robbery": 1016,
+        "Theft Over": 993
+      },
+      "file": "data/crimes/tps-csi-2026.md",
+      "max_report_date": "2026-06-30",
+      "min_report_date": "2026-01-01",
+      "missing_coordinates": 243,
+      "rows": 20028
+    }
+  }
+}

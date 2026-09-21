@@ -1,0 +1,401 @@
+---
+// /styleguide — DEV-ONLY design-system gallery.
+// Only emitted when INCLUDE_DEV_ROUTES=1 (see astro.config.mjs).
+//
+// Renders the brand, palette, typography, glyphs, caveats, and chart
+// primitives so visual regressions are easy to spot. Where charts need
+// data, they pull from the real build-emitted aggregates — no fabricated
+// values appear on this page. Fully static; no hydration needed.
+
+import Site from '../layouts/Site.astro';
+import BrandMark from '../components/brand/BrandMark.astro';
+import BrandLockup from '../components/brand/BrandLockup.astro';
+import Wordmark from '../components/brand/Wordmark.astro';
+import PulseStamp from '../components/brand/PulseStamp.astro';
+import BrandFavicon from '../components/brand/BrandFavicon.astro';
+import CatGlyph from '../components/CatGlyph.astro';
+import Caveat from '../components/Caveat.astro';
+import Sparkline from '../components/Sparkline.astro';
+import { torontoSeries, generatedAt } from '../lib/aggregates';
+import { CATEGORIES } from '../lib/categories';
+
+const series = torontoSeries();
+const syncedAt = generatedAt().slice(0, 10);
+
+// Palette tokens to showcase. Mirrors src/styles/tokens.css :root.
+const SURFACES = [
+  { name: '--bg',          example: 'oklch(.155 .012 240)' },
+  { name: '--bg-soft',     example: 'oklch(.185 .012 240)' },
+  { name: '--surface',     example: 'oklch(.205 .012 240)' },
+  { name: '--surface-2',   example: 'oklch(.235 .014 240)' },
+  { name: '--surface-3',   example: 'oklch(.275 .016 240)' },
+  { name: '--border-soft', example: 'oklch(.285 .014 240)' },
+  { name: '--border',      example: 'oklch(.36 .016 240)' },
+  { name: '--border-loud', example: 'oklch(.46 .018 240)' },
+];
+const INKS = [
+  { name: '--ink',   example: 'oklch(.965 .005 80)' },
+  { name: '--ink-2', example: 'oklch(.80 .008 80)' },
+  { name: '--ink-3', example: 'oklch(.62 .010 80)' },
+  { name: '--ink-4', example: 'oklch(.46 .012 240)' },
+];
+const ACCENTS = [
+  { name: '--accent',      example: 'oklch(.82 .13 78)' },
+  { name: '--accent-soft', example: 'oklch(.82 .13 78 / .12)' },
+  { name: '--accent-line', example: 'oklch(.82 .13 78 / .32)' },
+];
+
+const SPACING = [
+  ['--s-1', '4px'],
+  ['--s-2', '8px'],
+  ['--s-3', '12px'],
+  ['--s-4', '16px'],
+  ['--s-5', '24px'],
+  ['--s-6', '32px'],
+  ['--s-7', '48px'],
+  ['--s-8', '64px'],
+] as const;
+---
+<Site title="Toronto Crime Pulse · Styleguide (DEV)" active="dev">
+  <article class="main" style="padding: 48px 0 96px;">
+    <header style="margin-bottom: 48px;">
+      <div class="eyebrow" style="margin-bottom: 12px;">
+        DEV-only page · not present in prod build
+      </div>
+      <h1 style="font-family: var(--font-sans); font-weight: 600; font-size: 48px; letter-spacing: -0.02em; margin: 0 0 12px;">
+        Styleguide.
+      </h1>
+      <p style="color: var(--ink-2); max-width: 60ch; margin: 0;">
+        Brand, palette, typography, glyphs, caveats, chart primitives. Charts use real data from <code class="sg-code">public/data/aggregates</code> (generated {syncedAt}).
+      </p>
+    </header>
+
+    {/* ─── BRAND ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 01 · Brand</h2>
+
+      <div class="sg-row">
+        <div class="sg-label">BrandMark</div>
+        <div style="display: flex; align-items: flex-end; gap: 28px;">
+          <BrandMark size={16} />
+          <BrandMark size={20} />
+          <BrandMark size={28} />
+          <BrandMark size={40} />
+          <BrandMark size={64} />
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Wordmark</div>
+        <Wordmark />
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">BrandLockup</div>
+        <BrandLockup />
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">PulseStamp</div>
+        <div style="display: flex; align-items: center; gap: 28px;">
+          <PulseStamp size={64} />
+          <PulseStamp size={96} />
+          <PulseStamp size={120} />
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">BrandFavicon</div>
+        <div style="display: flex; align-items: center; gap: 28px;">
+          <BrandFavicon size={64} />
+          <BrandFavicon size={96} />
+        </div>
+      </div>
+    </section>
+
+    {/* ─── PALETTE ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 02 · Palette · OKLCH</h2>
+
+      <div class="sg-row">
+        <div class="sg-label">Surfaces / borders</div>
+        <div class="sg-swatches">
+          {SURFACES.map((s) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: var(${s.name}); border: 1px solid var(--border-soft);`} />
+              <div class="sg-swatch-meta">
+                <span class="sg-swatch-name">{s.name}</span>
+                <span class="sg-swatch-val">{s.example}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Ink</div>
+        <div class="sg-swatches">
+          {INKS.map((s) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: var(${s.name});`} />
+              <div class="sg-swatch-meta">
+                <span class="sg-swatch-name">{s.name}</span>
+                <span class="sg-swatch-val">{s.example}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Accent (amber)</div>
+        <div class="sg-swatches">
+          {ACCENTS.map((s) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: var(${s.name});`} />
+              <div class="sg-swatch-meta">
+                <span class="sg-swatch-name">{s.name}</span>
+                <span class="sg-swatch-val">{s.example}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Category hues</div>
+        <div class="sg-swatches">
+          {CATEGORIES.map((c) => (
+            <div class="sg-swatch">
+              <div class="sg-chip" style={`background: ${c.color};`} />
+              <div class="sg-swatch-meta">
+                <span class="sg-swatch-name">--cat-{c.id}</span>
+                <span class="sg-swatch-val">{c.name}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ─── TYPOGRAPHY ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 03 · Typography</h2>
+
+      <div class="sg-row">
+        <div class="sg-label">Space Grotesk · display</div>
+        <div style="font-family: var(--font-sans); font-weight: 600; font-size: 64px; line-height: 1.04; letter-spacing: -0.022em;">
+          Toronto's <span style="color: var(--accent);">10-year</span><br />crime pulse.
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Section title · 28px</div>
+        <h3 style="font-family: var(--font-sans); font-weight: 600; font-size: 28px; letter-spacing: -0.015em; margin: 0;">
+          Five categories, ten years
+        </h3>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Body · 15px</div>
+        <p style="margin: 0; max-width: 60ch; color: var(--ink-2);">
+          A plain view of how Toronto's reported crime has moved since 2016: normalised to rates per 10,000 residents, split by neighbourhood, drawn from the official police record rather than the news cycle.
+        </p>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Eyebrow · Plex Mono 11px</div>
+        <div class="eyebrow">§ 02 · By category · 10 years</div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Tabular numerals · Plex Mono</div>
+        <div style="font-family: var(--font-mono); font-size: 22px; font-variant-numeric: tabular-nums; color: var(--ink);">
+          2,761,290 · 158 · 363,773
+        </div>
+      </div>
+    </section>
+
+    {/* ─── GLYPHS ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 04 · Category glyphs</h2>
+
+      <div class="sg-row">
+        <div class="sg-label">Filled · 18px</div>
+        <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+          {CATEGORIES.map((c) => (
+            <span style="display: inline-flex; align-items: center; gap: 10px;">
+              <CatGlyph cat={c.id} size={18} />
+              <span class="label-sm">{c.name}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div class="sg-row">
+        <div class="sg-label">Sizes · 8 / 12 / 18 / 28</div>
+        <div style="display: flex; align-items: flex-end; gap: 24px;">
+          <CatGlyph cat="assault" size={8} />
+          <CatGlyph cat="assault" size={12} />
+          <CatGlyph cat="assault" size={18} />
+          <CatGlyph cat="assault" size={28} />
+        </div>
+      </div>
+    </section>
+
+    {/* ─── CAVEATS ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 05 · Caveats</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px;">
+        <Caveat kind="info">
+          <strong>Rates are per 10,000 residents.</strong> Counts alone would penalise larger neighbourhoods; population denominators come from the 2021 Census.
+        </Caveat>
+        <Caveat kind="warn">
+          <strong>2026 is year-to-date.</strong> Both the population denominator and the incident numerator are incomplete; this year is excluded from 10-year comparable visuals.
+        </Caveat>
+        <Caveat kind="exclude">
+          <strong>Sexual assault excluded.</strong> The TPS source omits it from this indicator series.
+        </Caveat>
+        <Caveat kind="scope">
+          <strong>Toronto only.</strong> Peel, York, Durham, and Halton are not in this dashboard.
+        </Caveat>
+      </div>
+    </section>
+
+    {/* ─── SPARKLINES (real data) ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 06 · Sparkline · real Toronto-wide series</h2>
+
+      {CATEGORIES.map((c) => (
+        <div class="sg-row" style="align-items: center;">
+          <div class="sg-label" style="display: flex; align-items: center; gap: 8px;">
+            <CatGlyph cat={c.id} size={10} />
+            {c.name}
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-2); padding: 16px; max-width: 480px; flex: 1;">
+            <div style={`color: ${c.color}; height: 48px;`}>
+              <Sparkline data={series[c.id]} color={c.color} height={48} width={420} fill accent />
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em;">
+              <span>'16 · {series[c.id][0]!.rate.toFixed(1)} / 10K</span>
+              <span>'25 · {series[c.id][series[c.id].length - 1]!.rate.toFixed(1)} / 10K</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </section>
+
+    {/* ─── SPACING ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 07 · Spacing scale · 4px base</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        {SPACING.map(([name, px]) => (
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span class="sg-label" style="min-width: 100px;">{name}</span>
+            <div style={`height: 12px; background: var(--accent); width: ${px};`} />
+            <span class="sg-label" style="color: var(--ink-3);">{px}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* ─── RADII ─── */}
+    <section class="sg-section">
+      <h2 class="sg-h2">§ 08 · Radii</h2>
+
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        {[
+          ['--r-1', '4px'],
+          ['--r-2', '8px'],
+          ['--r-3', '12px'],
+          ['--r-4', '16px'],
+        ].map(([name, px]) => (
+          <div style="text-align: center;">
+            <div style={`width: 80px; height: 80px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(${name});`} />
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); margin-top: 8px;">{name} · {px}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </article>
+</Site>
+
+<style>
+  .sg-section {
+    margin-bottom: 64px;
+    padding-bottom: 32px;
+    border-bottom: 1px dashed var(--border-soft);
+  }
+  .sg-section:last-of-type {
+    border-bottom: 0;
+  }
+  .sg-h2 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin: 0 0 24px;
+    color: var(--ink-2);
+  }
+  .sg-row {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-top: 1px dashed var(--border-soft);
+  }
+  .sg-row:first-child {
+    border-top: 0;
+  }
+  .sg-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    min-width: 200px;
+    flex-shrink: 0;
+    padding-top: 6px;
+  }
+  .sg-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .sg-swatch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 220px;
+  }
+  .sg-chip {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .sg-swatch-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .sg-swatch-name {
+    color: var(--ink);
+  }
+  .sg-swatch-val {
+    color: var(--ink-3);
+    font-size: 10px;
+  }
+  .sg-code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: var(--r-1);
+  }
+</style>

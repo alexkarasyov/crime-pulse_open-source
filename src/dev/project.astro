@@ -1,0 +1,162 @@
+---
+// /project — DEV-ONLY status page.
+// Only emitted when INCLUDE_DEV_ROUTES=1 (see astro.config.mjs).
+//
+// Renders a live status header computed from the build-emitted aggregates,
+// plus the raw markdown of backlog / changelog / charter / overview / ADRs
+// for at-a-glance project triage without leaving the browser. Markdown is
+// surfaced verbatim in <pre> blocks — devs and agents read the raw form,
+// and that's good enough; no markdown processor dependency.
+
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import Site from '../layouts/Site.astro';
+import {
+  allNeighbourhoods,
+  torontoTotalSeries,
+  cityPopulationByYear,
+  generatedAt,
+} from '../lib/aggregates';
+import { CATEGORIES } from '../lib/categories';
+
+const ROOT = process.cwd();
+
+function read(rel: string): string {
+  try {
+    return readFileSync(resolve(ROOT, rel), 'utf8');
+  } catch {
+    return `[not found: ${rel}]`;
+  }
+}
+
+const dumps: Array<{ heading: string; path: string; body: string }> = [
+  { heading: 'Backlog',         path: 'project/backlog.md',  body: read('project/backlog.md') },
+  { heading: 'Changelog',       path: 'docs/changelog.md',   body: read('docs/changelog.md') },
+  { heading: 'Charter',         path: 'project/charter.md',  body: read('project/charter.md') },
+  { heading: 'Spec overview',   path: 'docs/overview.md',    body: read('docs/overview.md') },
+  { heading: 'Data sources',    path: 'docs/data-sources.md',body: read('docs/data-sources.md') },
+  { heading: 'README',          path: 'README.md',           body: read('README.md') },
+];
+
+const adrFiles = readdirSync(resolve(ROOT, 'project/decisions'))
+  .filter((f) => f.endsWith('.md'))
+  .sort();
+const adrs = adrFiles.map((f) => {
+  const body = read(`project/decisions/${f}`);
+  const titleLine = body.split('\n', 1)[0] ?? '';
+  const title = titleLine.replace(/^#\s*/, '');
+  return { file: f, title };
+});
+
+// Live numbers from the aggregates.
+const nbhds = allNeighbourhoods();
+const totals = torontoTotalSeries();
+const total10y = totals.reduce((s, p) => s + p.count, 0);
+const lastYear = totals[totals.length - 1]!;
+const firstYear = totals[0]!;
+const pop = cityPopulationByYear();
+const lastPop = pop[lastYear.year]!;
+const syncedAt = generatedAt().slice(0, 10);
+---
+<Site title="Toronto Crime Pulse · Project status (DEV)" active="dev">
+  <article class="main" style="padding: 48px 0 96px;">
+    <header style="margin-bottom: 40px;">
+      <div class="eyebrow" style="margin-bottom: 12px;">
+        DEV-only page · not present in prod build
+      </div>
+      <h1 style="font-family: var(--font-sans); font-weight: 600; font-size: 48px; letter-spacing: -0.02em; margin: 0 0 12px;">
+        Project status.
+      </h1>
+      <p style="color: var(--ink-2); max-width: 60ch; margin: 0;">
+        Backlog, changelog, ADRs, and live numbers from the build-emitted aggregates. Everything below is computed at build time from real data; no fabricated values on this page.
+      </p>
+    </header>
+
+    {/* ─── Live numbers from real aggregates ─── */}
+    <section style="margin-bottom: 56px;">
+      <div class="eyebrow" style="margin-bottom: 16px;">§ Live · computed from public/data/aggregates</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div class="card">
+          <div class="card-sub">Aggregates generated at</div>
+          <div class="dev-stat">{syncedAt}</div>
+        </div>
+        <div class="card">
+          <div class="card-sub">Incidents · 2016–2025</div>
+          <div class="dev-stat">{total10y.toLocaleString()}</div>
+        </div>
+        <div class="card">
+          <div class="card-sub">Neighbourhoods loaded</div>
+          <div class="dev-stat">{nbhds.length}</div>
+        </div>
+        <div class="card">
+          <div class="card-sub">Categories</div>
+          <div class="dev-stat">{CATEGORIES.length}</div>
+        </div>
+        <div class="card">
+          <div class="card-sub">2025 incidents</div>
+          <div class="dev-stat">{lastYear.count.toLocaleString()}</div>
+        </div>
+        <div class="card">
+          <div class="card-sub">2025 City of Toronto pop</div>
+          <div class="dev-stat">{lastPop.toLocaleString()}</div>
+        </div>
+        <div class="card">
+          <div class="card-sub">2016 → 2025 (all categories rate / 10K)</div>
+          <div class="dev-stat">
+            {firstYear.rate.toFixed(1)} → {lastYear.rate.toFixed(1)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── ADR index ─── */}
+    <section style="margin-bottom: 56px;">
+      <div class="eyebrow" style="margin-bottom: 16px;">§ ADRs · {adrs.length} accepted</div>
+      <div class="card" style="padding: 0;">
+        {adrs.map((a) => (
+          <div style="padding: 12px 24px; border-bottom: 1px dashed var(--border-soft); font-family: var(--font-mono); font-size: 13px; color: var(--ink-2);">
+            <span style="color: var(--ink-3);">{a.file}</span>
+            <span style="margin: 0 12px; color: var(--ink-4);">·</span>
+            <span style="color: var(--ink);">{a.title}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* ─── Markdown dumps ─── */}
+    {dumps.map((d) => (
+      <section style="margin-bottom: 40px;">
+        <div class="eyebrow" style="margin-bottom: 12px;">
+          § {d.heading} · <span style="color: var(--ink-4);">{d.path}</span>
+        </div>
+        <pre class="md-dump">{d.body}</pre>
+      </section>
+    ))}
+  </article>
+</Site>
+
+<style>
+  .dev-stat {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  pre.md-dump {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-3);
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+    margin: 0;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+</style>

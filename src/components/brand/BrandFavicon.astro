@@ -1,0 +1,40 @@
+---
+// BrandFavicon — bigger, framed BrandMark used in About / Hero corner.
+// Includes a "CP" caption beneath the mark.
+// Ported from styleguide/brand.jsx.
+
+import BrandMark from './BrandMark.astro';
+
+interface Props {
+  size?: number;
+}
+
+const { size = 96 } = Astro.props;
+---
+<div
+  style={`
+    width: ${size}px;
+    height: ${size}px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+  `}
+>
+  <BrandMark size={size * 0.45} />
+  <div
+    style={`
+      font-family: var(--font-mono);
+      font-size: ${size * 0.10}px;
+      letter-spacing: 0.18em;
+      color: var(--ink);
+      font-weight: 600;
+    `}
+  >
+    CP
+  </div>
+</div>

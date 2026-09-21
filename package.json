@@ -1,0 +1,48 @@
+{
+  "name": "crime-pulse",
+  "type": "module",
+  "version": "1.0.0-rc",
+  "private": true,
+  "description": "Toronto Crime Pulse — static dashboard built with Astro and deployed to Cloudflare Pages.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "INCLUDE_DEV_ROUTES=1 astro dev",
+    "start": "INCLUDE_DEV_ROUTES=1 astro dev",
+    "aggregates": "python3 scripts/build_aggregates.py",
+    "refresh": "python3 scripts/refresh.py stage",
+    "refresh:apply": "python3 scripts/refresh.py apply",
+    "build": "python3 scripts/build_aggregates.py && node scripts/build_og_images.mjs && astro build && node scripts/update_sitemap_lastmod.mjs",
+    "build:dev": "INCLUDE_DEV_ROUTES=1 python3 scripts/build_aggregates.py && node scripts/build_og_images.mjs && INCLUDE_DEV_ROUTES=1 astro build && node scripts/update_sitemap_lastmod.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "verify": "npm run check && npm run build && npm test && npm run test:browser",
+    "test:browser": "node tests/browser/dashboard.mjs",
+    "test": "vitest run && npm run test:py",
+    "test:watch": "vitest",
+    "test:py": "python3 -m unittest discover -s scripts/tests",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^6.0.5",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@preact/signals": "^2.11.2",
+    "astro": "^7.3.2",
+    "leaflet": "^1.9.4",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@axe-core/puppeteer": "^4.13.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^22.20.2",
+    "preact-render-to-string": "^6.7.0",
+    "puppeteer-core": "^25.10.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0"
+  }
+}

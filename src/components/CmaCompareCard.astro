@@ -1,0 +1,59 @@
+---
+// CmaCompareCard — Toronto CMA vs national and Ontario-peer metro crime rates.
+//
+// Reads `cma-context.json` (emitted by scripts/build_aggregates.py from
+// data/cma/cma-rates-by-geography.md, which scripts/import_cma_rates.py
+// pulls from StatCan table 35-10-0177-01). Renders nothing if absent.
+
+import { cmaContext } from '../lib/aggregates';
+
+const ctx = cmaContext();
+const latestYear = ctx ? ctx.years[ctx.years.length - 1] : null;
+
+interface BarRow {
+  label: string;
+  value: number;
+  accent: boolean;
+}
+
+const rows: BarRow[] = ctx && latestYear != null
+  ? ctx.geographies
+      .map((g) => {
+        const pt = g.series.find((p) => p.year === latestYear);
+        const v = pt?.rate_per_100k;
+        return v != null ? { label: g.label, value: v, accent: !!g.accent } : null;
+      })
+      .filter((r): r is BarRow => r !== null)
+      .sort((a, b) => a.value - b.value)
+  : [];
+
+const max = rows.length ? Math.max(...rows.map((r) => r.value)) * 1.05 : 1;
+---
+{ctx && rows.length > 0 && (
+  <div class="csi-card">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+      <h3 class="card-title">Toronto metro in context</h3>
+      <span class="card-sub">Rate / 100K · {latestYear}</span>
+    </div>
+    <div style="font-size: 13px; color: var(--ink-2); max-width: 48ch;">
+      Police-reported Criminal Code rate (excluding traffic) for Census Metropolitan Areas. <strong style="color: var(--ink);">Toronto CMA</strong> spans the full metro — Mississauga, Brampton, Vaughan, Markham, and other GTA municipalities — while this dashboard's maps and neighbourhood views cover the <strong style="color: var(--ink);">City of Toronto</strong> only.
+    </div>
+    <div class="csi-bars">
+      {rows.map((r) => (
+        <div class="csi-bar-row">
+          <span class="csi-bar-label" style={r.accent ? 'color: var(--accent);' : ''}>{r.label}</span>
+          <div class="csi-bar-track">
+            <div
+              class="csi-bar-fill"
+              style={`width: ${(r.value / max) * 100}%; background: ${r.accent ? 'var(--accent)' : 'var(--ink-3)'};`}
+            />
+          </div>
+          <span class="csi-bar-val" style={`color: ${r.accent ? 'var(--accent)' : 'var(--ink-2)'};`}>{r.value.toLocaleString('en-CA', { maximumFractionDigits: 0 })}</span>
+        </div>
+      ))}
+    </div>
+    <div style="margin-top: 12px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em;">
+      Source: StatCan table 35-10-0177-01 · {ctx.metric.violation}
+    </div>
+  </div>
+)}

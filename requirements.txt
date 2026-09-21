@@ -1,0 +1,2 @@
+# Population XLSX importer; the aggregate builder and other importers are stdlib-only.
+openpyxl>=3.1.5,<4

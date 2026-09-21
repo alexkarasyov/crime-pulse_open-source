@@ -1,0 +1,310 @@
+---
+// Neighbourhood screen — one statically-rendered HTML file per neighbourhood,
+// for each of the 158 official Toronto neighbourhoods. The aggregate JSON
+// ships once; each page reads the slice it needs at build time.
+//
+// Ported from styleguide/screens/neighbourhood.jsx.
+
+import Site from '../../layouts/Site.astro';
+import Caveat from '../../components/Caveat.astro';
+
+import NeighbourhoodHero from '../../components/islands/NeighbourhoodHero.tsx';
+import NeighbourhoodChange from '../../components/islands/NeighbourhoodChange.tsx';
+import NeighbourhoodTrend from '../../components/islands/NeighbourhoodTrend.tsx';
+import NeighbourhoodCalendar from '../../components/islands/NeighbourhoodCalendar.tsx';
+import NeighbourhoodFeed from '../../components/islands/NeighbourhoodFeed.tsx';
+import NeighbourhoodCatReadout from '../../components/islands/NeighbourhoodCatReadout.tsx';
+import NeighboursTable, { type NeighbourRow } from '../../components/islands/NeighboursTable.tsx';
+import CategoryPicker from '../../components/islands/CategoryPicker.tsx';
+import PrimaryCatText from '../../components/islands/PrimaryCatText.tsx';
+import LazyMap from '../../components/islands/LazyMap.tsx';
+import ViewRail from '../../components/islands/ViewRail.tsx';
+
+import {
+  neighbourhoodIds,
+  neighbourhoodById,
+  allNeighbourhoods,
+  nearestNeighbourIds,
+  torontoSeries,
+  calendarGrid,
+  neighbourhoodIncidents,
+  cityPopulationByYear,
+} from '../../lib/aggregates';
+import { CATEGORIES } from '../../lib/categories';
+import { neighbourhoodBreadcrumbs } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const ids = neighbourhoodIds();
+  return ids.map((id) => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+const nbhd = neighbourhoodById(id!);
+if (!nbhd) {
+  throw new Error(`Neighbourhood ${id} not found in aggregate`);
+}
+
+const ogImage = `/og/n-${nbhd.id}.png`;
+const description = `Crime trends for ${nbhd.name}, Toronto: 10 years of TPS Community Safety Indicators, incident counts and rate per 10K (population ${nbhd.population.toLocaleString()}).`;
+const pageTitle = `${nbhd.name} · Toronto Crime Pulse`;
+
+const torontoByCat = torontoSeries();
+
+// Calendar grid for *every* category (the island toggles between them).
+// Slimmed to dense count arrays — the (month, year) axis is implied by
+// index, so the serialized island props stay small.
+const countsByCat = Object.fromEntries(
+  CATEGORIES.map((c) => [
+    c.id,
+    calendarGrid(nbhd.id, c.id).map((row) => row.map((cell) => cell.count)),
+  ]),
+) as Record<string, number[][]>;
+
+// Neighbours panel: 8 geographically-closest neighbourhoods (by boundary
+// centroid distance), plus self. Falls back to numeric-id proximity only if
+// the GeoJSON centroids are unavailable at build time.
+const allNbhds = allNeighbourhoods();
+const byId = new Map(allNbhds.map((n) => [n.id, n]));
+let nearIds = nearestNeighbourIds(nbhd.id, 8);
+if (nearIds.length === 0) {
+  nearIds = allNbhds
+    .filter((n) => n.id !== nbhd.id)
+    .map((n) => ({ id: n.id, d: Math.abs(parseInt(n.id, 10) - parseInt(nbhd.id, 10)) }))
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 8)
+    .map((x) => x.id);
+}
+const idsByDist = nearIds.map((nid) => byId.get(nid)).filter((n): n is typeof nbhd => Boolean(n));
+// Slim per-category number arrays (parallel to `tableYears`) — full
+// YearPoint objects would inline ~40KB of props into the page HTML.
+const tableYears = nbhd.series.assault.map((p) => p.year);
+const lastYear = tableYears[tableYears.length - 1] ?? 2025;
+const neighbourRows = [nbhd, ...idsByDist].map((n) => ({
+  id: n.id,
+  name: n.name,
+  population: n.population,
+  byCat: Object.fromEntries(
+    CATEGORIES.map((c) => [
+      c.id,
+      {
+        rates: (n.series[c.id] ?? []).map((p) => p.rate),
+        counts: (n.series[c.id] ?? []).map((p) => p.count),
+      },
+    ]),
+  ) as NeighbourRow['byCat'],
+}));
+
+// City-wide anchor row for the neighbours table — same slim parallel-array
+// shape as the neighbour rows, same year axis.
+const cityByCat = Object.fromEntries(
+  CATEGORIES.map((c) => [
+    c.id,
+    {
+      rates: (torontoByCat[c.id] ?? []).map((p) => p.rate),
+      counts: (torontoByCat[c.id] ?? []).map((p) => p.count),
+    },
+  ]),
+) as NeighbourRow['byCat'];
+const cityPopulations = cityPopulationByYear();
+
+// The feed island fetches the full incident list at hydration (it already
+// ships as static JSON); only the first page is server-rendered as props.
+const incidents = neighbourhoodIncidents(nbhd.id);
+const initialIncidents = incidents.slice(0, 14);
+
+// SR-only summary: 10-year assault rate trajectory for this nbhd.
+const assaultSeries = nbhd.series.assault;
+const assaultFirst = assaultSeries[0]!.rate;
+const assaultLast = assaultSeries[assaultSeries.length - 1]!.rate;
+---
+{/* One control model (v2 design): the ViewRail owns unit, page scope
+    (activeCats) and the year window; the primary lens is picked beside the
+    trend chart. The topbar unit toggle is hidden so the unit lives in exactly
+    one place. */}
+<Site
+  title={pageTitle}
+  description={description}
+  ogImage={ogImage}
+  active="neighbourhood"
+  showTopbarUnit={false}
+  jsonLd={[neighbourhoodBreadcrumbs(nbhd.id, nbhd.name, Astro.site)]}
+>
+  <ViewRail client:load slot="rail" />
+  <div class="page" data-screen-label="02 Neighbourhood">
+    <section>
+      <div class="main">
+        <div class="nbhd-head">
+          <div>
+            <div class="eyebrow" style="margin-bottom: 12px;">
+              <a href="/" style="color: var(--accent);">← Toronto</a>
+              <span style="margin: 0 8px; color: var(--ink-4);">/</span>
+              <span class="nbhd-id">N° {nbhd.id}</span>
+            </div>
+            <h1 class="nbhd-name">{nbhd.name}.</h1>
+            <p style="font-size: 15px; color: var(--ink-2); max-width: 44ch; margin: 16px 0 0;">
+              Population <span class="num tnum" style="color: var(--ink);">{nbhd.population.toLocaleString()}</span> (2021 Census, 25% sample data). One of <span style="color: var(--ink);">158</span> official Toronto neighbourhood boundaries used for this dashboard. Rates for every year use this 2021 denominator; see <a href="/about/#unit" style="color: var(--accent);">About § 02</a>.
+            </p>
+            {/* Static links only — server-rendered, no hydration needed. */}
+            <NeighbourhoodChange currentId={nbhd.id} />
+          </div>
+          <NeighbourhoodHero
+            client:load
+            seriesByCat={nbhd.series}
+            torontoByCat={torontoByCat}
+          />
+        </div>
+      </div>
+    </section>
+
+    {/* TREND */}
+    <section class="section">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow section-eye">§ 01 · Trend · {nbhd.name}</div>
+            <h2 class="section-title">
+              <PrimaryCatText client:load template="$ $U, $N years" />
+            </h2>
+            <p class="section-desc">
+              The solid line shows {nbhd.name}. Switch to rates to add the dashed Toronto-wide baseline on a comparable per-capita scale.
+            </p>
+          </div>
+          <div class="prim-tabs" aria-label="Primary category">
+            <span class="vrail-label">Primary</span>
+            <CategoryPicker client:load variant="chips" />
+          </div>
+        </div>
+        <NeighbourhoodTrend
+          client:visible
+          nbhdName={nbhd.name}
+          seriesByCat={nbhd.series}
+          torontoByCat={torontoByCat}
+        />
+      </div>
+    </section>
+
+    {/* CALENDAR */}
+    <section class="section">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow section-eye">§ 02 · Seasonality · Month × Year</div>
+            <h2 class="section-title">When in the year do reports cluster?</h2>
+            <p class="section-desc">
+              Each cell is one calendar month from {nbhd.name}. Shading is by monthly count. Some categories show seasonality: break-and-enter rises in winter, assault peaks in summer.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <NeighbourhoodCalendar client:only="preact" countsByCat={countsByCat} />
+        </div>
+      </div>
+    </section>
+
+    {/* MINI MAP + neighbours */}
+    <section class="section">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow section-eye">§ 03 · Context · Where it sits in Toronto</div>
+            <h2 class="section-title">How {nbhd.name} sits among its neighbours</h2>
+            <p class="section-desc">
+              {nbhd.name} highlighted on the city map, then a table of its geographically nearest neighbourhoods showing <PrimaryCatText client:load template="$Y $L $U" />.
+            </p>
+          </div>
+        </div>
+
+        <div class="map-wrap" style="margin-bottom: 16px;">
+          <div class="map-canvas">
+            <LazyMap client:load selectedId={nbhd.id} silentHover />
+          </div>
+          <div class="map-meta">
+            <div>
+              <div class="map-legend-title">Selected</div>
+              <div style="font-family: var(--font-sans); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; color: var(--accent); margin-bottom: 4px;">
+                {nbhd.name}
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em;">
+                N° {nbhd.id} · POP {nbhd.population.toLocaleString()}
+              </div>
+            </div>
+            <div style="border-top: 1px dashed var(--border-soft); padding-top: 16px;">
+              <NeighbourhoodCatReadout client:only="preact" seriesByCat={nbhd.series} />
+            </div>
+            <div style="border-top: 1px dashed var(--border-soft); padding-top: 12px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em; line-height: 1.5;">
+              Map: 2021 Census neighbourhood boundaries · CartoDB Dark Matter tiles · single-hue ramp keyed to the active category
+            </div>
+          </div>
+        </div>
+
+        <NeighboursTable
+          client:visible
+          years={tableYears}
+          rows={neighbourRows}
+          selfId={nbhd.id}
+          cityByCat={cityByCat}
+          cityPopulationByYear={cityPopulations}
+        />
+
+        {/* Static nearby links — server-rendered so the 158 pages interlink
+            without JavaScript (crawlable mesh; the table above is an island). */}
+        <nav class="nearby-links" aria-label="Nearby neighbourhoods">
+          <span class="nearby-links-label">Nearby:</span>
+          {idsByDist.map((n) => (
+            <a href={`/neighbourhood/${n.id}/`}>{n.name}</a>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    {/* FEED */}
+    <section class="section">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow section-eye">§ 04 · Chronological feed · {incidents.length.toLocaleString()} incidents</div>
+            <h2 class="section-title">Recorded incidents in {nbhd.name}</h2>
+            <p class="section-desc">
+              Absolute dates only: no addresses, no coordinates, no relative dates. Source: TPS Community Safety Indicators, deduped at neighbourhood resolution.
+            </p>
+          </div>
+        </div>
+        <NeighbourhoodFeed
+          client:visible
+          nbhdId={nbhd.id}
+          initialIncidents={initialIncidents}
+          totalCount={incidents.length}
+        />
+        <div style="margin-top: 16px;">
+          <Caveat kind="info">
+            Per-incident lat/lng exists in the source but is flagged as <em>approximate</em>. The dashboard therefore works at neighbourhood resolution only. <strong>No addresses are surfaced.</strong>
+          </Caveat>
+        </div>
+      </div>
+    </section>
+
+    {/* SR-only chart summary */}
+    <div class="sr-only">
+      <h2>Data summary for {nbhd.name}</h2>
+      <p>
+        Assault rate per 10,000 residents in {nbhd.name} moved from {assaultFirst.toFixed(1)} in {tableYears[0]} to {assaultLast.toFixed(1)} in {lastYear}. Population (2021 Census, 25% sample): {nbhd.population.toLocaleString()}.
+      </p>
+      <table>
+        <caption>{nbhd.name}: rate per 10,000 residents by category, {tableYears[0]}–{lastYear}</caption>
+        <thead>
+          <tr><th>Year</th>{CATEGORIES.map((c) => <th>{c.name}</th>)}</tr>
+        </thead>
+        <tbody>
+          {nbhd.series.assault.map((_, i) => (
+            <tr>
+              <td>{nbhd.series.assault[i]!.year}</td>
+              {CATEGORIES.map((c) => (
+                <td>{nbhd.series[c.id][i]!.rate.toFixed(1)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Site>

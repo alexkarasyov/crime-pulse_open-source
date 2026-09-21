@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 40" width="230" height="40" role="img" aria-label="Crime Pulse">
+  <title>Crime Pulse lockup</title>
+  <g><rect class="bar" x="1.50" y="20.00" width="5" height="14.00" rx="1" fill="currentColor"></rect><rect class="bar" x="9.50" y="13.84" width="5" height="20.16" rx="1" fill="currentColor"></rect><rect class="bar" x="17.50" y="18.32" width="5" height="15.68" rx="1" fill="currentColor"></rect><rect class="peak" x="25.50" y="6.00" width="5" height="28.00" rx="1" fill="#4893f2"></rect><rect class="bar" x="33.50" y="15.52" width="5" height="18.48" rx="1" fill="currentColor"></rect></g>
+  <text x="52" y="26" font-family="&#39;Space Grotesk&#39;, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="-1" fill="currentColor">crime<tspan fill="#4893f2">.</tspan>pulse</text>
+</svg>

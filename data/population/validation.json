@@ -1,0 +1,71 @@
+{
+  "csd_file": {
+    "output_path": "data/population/toronto-csd-annual.md",
+    "row_count": 10,
+    "source": {
+      "fetched_at": "2026-07-27T10:58:34Z",
+      "filter_dguid": "2021A00053520005",
+      "name": "Statistics Canada Table 17-10-0155-01 \u2014 Population estimates, July 1, by census subdivision, 2021 boundaries",
+      "release_date": "2026-01-14",
+      "url": "https://www150.statcan.gc.ca/n1/tbl/csv/17100155-eng.zip"
+    },
+    "spot_checks": {
+      "toronto_csd_2021": 2917666,
+      "toronto_csd_2025": 3271830
+    },
+    "validation": {
+      "errors": [],
+      "row_count": 10,
+      "row_count_ok": true,
+      "year_range_check": {
+        "failed_years": [],
+        "passed_years": [
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "range": [
+          2500000,
+          3500000
+        ]
+      }
+    }
+  },
+  "neighbourhood_file": {
+    "output_path": "data/population/toronto-neighbourhoods-2021.md",
+    "row_count": 158,
+    "source": {
+      "fetched_at": "2026-07-27T10:58:32Z",
+      "name": "City of Toronto Neighbourhood Profiles 2021 (158-model)",
+      "population_row_label": "Total - Age groups of the population - 25% sample data",
+      "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/6e19a90f-971c-46b3-852c-0c48c436d1fc/resource/19d4a806-7385-4889-acf2-256f1e079060/download/nbhd_2021_census_profile_full_158model.xlsx"
+    },
+    "spot_checks": {
+      "annex_95": 29300,
+      "moss_park_73": 21490
+    },
+    "validation": {
+      "158_sum_vs_census": {
+        "actual": 2761290,
+        "delta": -33066,
+        "delta_pct": -1.1833,
+        "target": 2794356,
+        "tolerance_pct": 2.0,
+        "within_tolerance": true
+      },
+      "csi_ids_count": 158,
+      "csi_ids_extra_in_population": [],
+      "csi_ids_missing_from_population": [],
+      "errors": [],
+      "row_count": 158,
+      "row_count_ok": true
+    }
+  }
+}

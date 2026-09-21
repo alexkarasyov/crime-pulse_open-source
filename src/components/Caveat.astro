@@ -1,0 +1,25 @@
+---
+// Caveat — editorial callout with a category-style icon.
+// info | warn | exclude | scope.
+// Ported from styleguide/components.jsx.
+
+type Kind = 'info' | 'warn' | 'exclude' | 'scope';
+
+interface Props {
+  kind?: Kind;
+  compact?: boolean;
+}
+
+const { kind = 'info', compact = false } = Astro.props;
+
+const ICONS: Record<Kind, string> = {
+  info: 'i',
+  warn: '!',
+  exclude: '×',
+  scope: '◇',
+};
+---
+<div class={`caveat ${kind} ${compact ? 'compact' : ''}`}>
+  <span class="caveat-icon">{ICONS[kind]}</span>
+  <div class="caveat-body"><slot /></div>
+</div>

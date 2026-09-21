@@ -1,0 +1,36 @@
+{
+  "output_path": "data/csi/csi-by-geography.md",
+  "source": {
+    "name": "Statistics Canada Table 35-10-0026-01",
+    "url": "https://www150.statcan.gc.ca/n1/tbl/csv/35100026-eng.zip",
+    "fetched_at": "2026-07-27T11:12:31Z",
+    "license": "Statistics Canada Open Licence (commercial use permitted with attribution)"
+  },
+  "row_count": 66,
+  "year_window": [
+    2015,
+    2025
+  ],
+  "years_present": [
+    2015,
+    2025
+  ],
+  "geographies_kept": [
+    "Toronto",
+    "Montr\u00e9al",
+    "Vancouver",
+    "Calgary",
+    "Canada",
+    "Ontario"
+  ],
+  "spot_checks": {
+    "toronto_cma_csi_total_latest": {
+      "year": 2025,
+      "value": 54.99
+    },
+    "canada_csi_total_latest": {
+      "year": 2025,
+      "value": 75.01
+    }
+  }
+}

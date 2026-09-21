@@ -1,0 +1,28 @@
+---
+// BrandLockup — "Live Signal" identity: animated 5-bar equalizer mark +
+// lowercase "crime.pulse" wordmark. Styled by .brand / .brand-mark /
+// .brand-wordmark in base.css. The per-rect `style="--i:n"` are animation
+// stagger indices (not themable) — see redesign INTEGRATION.md §3.
+// Renders as an <a> when `href` is given, else a plain inline-flex span.
+
+interface Props {
+  href?: string;
+}
+
+const { href } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+<Tag
+  class="brand"
+  {...href ? { href } : {}}
+  aria-label="Crime Pulse, home"
+>
+  <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+    <rect class="bar live"  style="--i:0" x="1.5"  y="20"    width="5" height="14"    rx="1" />
+    <rect class="bar live"  style="--i:1" x="9.5"  y="13.84" width="5" height="20.16" rx="1" />
+    <rect class="bar live"  style="--i:2" x="17.5" y="18.32" width="5" height="15.68" rx="1" />
+    <rect class="peak live" style="--i:3" x="25.5" y="6"     width="5" height="28"    rx="1" />
+    <rect class="bar live"  style="--i:4" x="33.5" y="15.52" width="5" height="18.48" rx="1" />
+  </svg>
+  <span class="brand-wordmark">crime<span class="dot">.</span>pulse</span>
+</Tag>

@@ -1,0 +1,32 @@
+---
+// 404 — branded not-found page. Cloudflare Pages serves dist/404.html
+// automatically for any unmatched route on a static deploy.
+import Site from '../layouts/Site.astro';
+---
+<Site title="Toronto Crime Pulse · Not found" noindex>
+  <div class="page" data-screen-label="404">
+    <section>
+      <div class="main" style="padding: 96px 0; text-align: center;">
+        <div class="eyebrow" style="margin-bottom: 16px; color: var(--accent);">
+          § 404 · Off the map
+        </div>
+        <h1 style="font-family: var(--font-sans); font-weight: 600; font-size: clamp(40px, 7vw, 72px); letter-spacing: -0.022em; margin: 0; line-height: 1.05;">
+          No data at<br />this address.
+        </h1>
+        <p style="font-size: 17px; color: var(--ink-2); max-width: 48ch; margin: 24px auto 0; line-height: 1.55;">
+          The page you asked for isn't part of this dashboard. It may have moved,
+          or the link may be mistyped. Every neighbourhood lives under
+          <code style="font-family: var(--font-mono); color: var(--ink);">/neighbourhood/</code>.
+        </p>
+        <div style="display: flex; gap: 20px; margin-top: 36px; justify-content: center; flex-wrap: wrap;">
+          <a href="/" style="background: var(--accent); color: var(--bg); padding: 12px 20px; border-radius: var(--r-2); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;">
+            ← Back to the overview
+          </a>
+          <a href="/neighbourhood/" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px dashed var(--border);">
+            Browse all 158 neighbourhoods
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Site>

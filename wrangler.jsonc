@@ -1,0 +1,12 @@
+{
+  "name": "crime-pulse",
+  "compatibility_date": "2026-07-13",
+  "assets": {
+    "directory": "dist",
+    // Serve the branded dist/404.html on unknown paths. Workers static
+    // assets defaults to "none" (bodyless 404) — unlike Cloudflare Pages,
+    // which picks up 404.html automatically. Without this, the
+    // docs/deploy.md smoke check ("branded 404 on a bad path") fails.
+    "not_found_handling": "404-page"
+  }
+}

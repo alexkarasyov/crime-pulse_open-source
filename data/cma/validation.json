@@ -1,0 +1,40 @@
+{
+  "output_path": "data/cma/cma-rates-by-geography.md",
+  "source": {
+    "name": "Statistics Canada Table 35-10-0177-01",
+    "url": "https://www150.statcan.gc.ca/n1/tbl/csv/35100177-eng.zip",
+    "fetched_at": "2026-08-31T02:25:45Z",
+    "license": "Statistics Canada Open Licence (commercial use permitted with attribution)",
+    "violation": "Total, all Criminal Code violations (excluding traffic) [50]",
+    "statistic": "Rate per 100,000 population"
+  },
+  "row_count": 80,
+  "year_window": [
+    2016,
+    2025
+  ],
+  "years_present": [
+    2016,
+    2025
+  ],
+  "geographies_kept": [
+    "Toronto CMA",
+    "Hamilton",
+    "Ottawa-Gatineau",
+    "Montr\u00e9al",
+    "Vancouver",
+    "Calgary",
+    "Edmonton",
+    "Canada"
+  ],
+  "spot_checks": {
+    "toronto_cma_rate_latest": {
+      "year": 2025,
+      "value": 3949.7
+    },
+    "canada_rate_latest": {
+      "year": 2025,
+      "value": 5584.6
+    }
+  }
+}

@@ -1,0 +1,176 @@
+---
+// About the data — methodology, scope, ethics. Fully static.
+// Ported from styleguide/screens/about.jsx.
+
+import Site from '../layouts/Site.astro';
+import Caveat from '../components/Caveat.astro';
+import {
+  dataThrough,
+  dataImportedAt,
+  neighbourhoodResolution,
+  partialYearThrough,
+} from '../lib/aggregates';
+import { datasetSchema } from '../lib/schema';
+import pkg from '../../package.json';
+
+const appVersion = pkg.version;
+
+const through = dataThrough();
+const importedAt = dataImportedAt();
+const ytdDates = Object.values(partialYearThrough());
+const ytdThrough = ytdDates.length ? ytdDates[ytdDates.length - 1] : null;
+const resolution = neighbourhoodResolution();
+---
+<Site
+  title="Toronto Crime Pulse · About the data"
+  description="How Toronto Crime Pulse is built: sources, why rates not counts, the 2021 Census 25% sample denominator, scope and exclusions, refresh cadence, and ethics."
+  active="about"
+  jsonLd={[datasetSchema(Astro.site)]}
+>
+  <div class="page" data-screen-label="04 About">
+    <section>
+      <div class="main" style="padding: 56px 0 32px;">
+        <div class="eyebrow" style="margin-bottom: 12px;">§ About the data · methodology · v1</div>
+        <h1 style="font-family: var(--font-sans); font-weight: 600; font-size: 56px; letter-spacing: -0.022em; margin: 0; max-width: 20ch; line-height: 1.05;">
+          What's in, what's out, and why.
+        </h1>
+        <p style="font-size: 17px; color: var(--ink-2); max-width: 60ch; margin-top: 20px; line-height: 1.55;">
+          This dashboard is built on the Toronto Police Service Community Safety Indicators series, with Statistics Canada population denominators. Below is the methodology it stands on. Read it before comparing anything on this site.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 0 0 64px;">
+      <div class="main">
+        <div class="about-grid">
+          <nav class="about-toc" aria-label="On this page">
+            <p class="toc-title">Contents</p>
+            <a href="#sources">01 · Sources</a>
+            <a href="#unit">02 · The default unit</a>
+            <a href="#map">03 · Why a choropleth, not dots</a>
+            <a href="#scope">04 · Scope and exclusions</a>
+            <a href="#cadence">05 · Refresh cadence</a>
+            <a href="#ethics">06 · Ethics</a>
+            <a href="#colophon">07 · Colophon</a>
+          </nav>
+
+          <div>
+            <div class="about-section" id="sources">
+              <div class="eyebrow">§ 01 · ADR-001 / data-sources.md</div>
+              <h2>Sources.</h2>
+              <p>
+                All incident data is sourced from the Toronto Police Service Community Safety Indicators. The dashboard reads pre-aggregated JSON produced by the build pipeline, which is why cross-filter UI stays fast even on mobile. Data covers reports through <strong>{through}</strong>, imported <strong>{importedAt}</strong>.
+              </p>
+              <dl class="dl-grid">
+                <dt>Incidents</dt>
+                <dd>Toronto Police Service · Community Safety Indicators</dd>
+                <dt>Population (city)</dt>
+                <dd>Statistics Canada · City of Toronto CSD estimates by year (table 17-10-0155-01)</dd>
+                <dt>Population (nbhd)</dt>
+                <dd>Toronto Neighbourhood Profiles · 2021 Census, 25% sample data</dd>
+                <dt>National context</dt>
+                <dd>StatCan table 35-10-0026-01 · Crime Severity Index</dd>
+                <dt>Boundaries</dt>
+                <dd>City of Toronto · 158 official neighbourhoods · 2021 boundary set</dd>
+              </dl>
+            </div>
+
+            <div class="about-section" id="unit">
+              <div class="eyebrow">§ 02 · ADR-009</div>
+              <h2>The default unit is raw incident counts.</h2>
+              <p>
+                Every chart on this site defaults to <strong>raw incident counts</strong> — the unfiltered record of what was reported — with <strong>rate per 10,000 residents</strong> one toggle away. Toggling units changes the meaning of every number on screen at once.
+              </p>
+              <Caveat kind="warn">
+                Counts visually penalize high-population neighbourhoods: a denser neighbourhood with the same per-capita rate as a quieter one looks more dangerous on the page, even though it isn't. When comparing neighbourhoods, switch to rates.
+              </Caveat>
+              <Caveat kind="info">
+                Per-capita rates flatten the population effect but introduce their own caveat: a low-population neighbourhood with a single incident can look artificially high. Read absolute counts alongside the rate.
+              </Caveat>
+              <Caveat kind="warn">
+                <strong>Two denominator caveats.</strong> Per-neighbourhood rates use the 2021 Census <strong>25% sample</strong> population (the long-form sample count, slightly below the full Census count, so rates read roughly 1% high). And that 2021 denominator is <strong>reused for every year</strong>, including 2022–2025: Toronto's population has grown since 2021, so recent rates in fast-growing neighbourhoods read high. City-wide rates do not share this caveat; they use StatCan's annual estimates.
+              </Caveat>
+            </div>
+
+            <div class="about-section" id="map">
+              <div class="eyebrow">§ 03 · ADR-003</div>
+              <h2>Why a choropleth, not a dot/cluster map.</h2>
+              <p>
+                The source publishes approximate lat/lng per incident and explicitly forbids exact-address presentation. A dot map would imply a precision the data does not have, and risks tying records to specific buildings, blocks, or people. We instead aggregate to neighbourhood level: 158 cells, each shaded by the active category in the active unit — raw counts by default, rate per 10K residents one toggle away (ADR-009).
+              </p>
+              <Caveat kind="warn">
+                <strong>No incident dots in v1.</strong> No addresses, no coordinates, no maps of approximate points. If you need point-resolution data, the TPS open data portal publishes it directly with the same caveats.
+              </Caveat>
+            </div>
+
+            <div class="about-section" id="scope">
+              <div class="eyebrow">§ 04 · ADR-001</div>
+              <h2>Scope and exclusions.</h2>
+              <p>This dashboard is intentionally narrow. Knowing what it doesn't cover is part of reading it correctly.</p>
+              <div class="about-scope-grid">
+                <Caveat kind="exclude">
+                  <strong>No sexual assault.</strong> Excluded by the TPS source from this indicator series. Not a design choice on our part.
+                </Caveat>
+                <Caveat kind="scope">
+                  <strong>Toronto only.</strong> Maps, neighbourhood pages, and feeds cover the City of Toronto (158 social-planning neighbourhoods). Peel, York, Durham, and Halton are out of scope for incident-level views. The Overview's <em>Toronto metro in context</em> card uses Statistics Canada's Toronto CMA — which already includes Mississauga, Brampton, Vaughan, Markham, and other GTA municipalities in one metro bucket — for metro-level rate comparison only.
+                </Caveat>
+                <Caveat kind="warn">
+                  <strong>{ytdThrough ? ytdThrough.slice(0, 4) : 'The current year'} is YTD{ytdThrough ? ` (through ${ytdThrough})` : ''}.</strong> Both numerator (incidents) and denominator (population) are incomplete. Excluded from all 10-year comparable visuals. A YTD toggle is available but is always paired with a disclaimer.
+                </Caveat>
+                <Caveat kind="info">
+                  <strong>Five categories.</strong> Assault, Auto Theft, Break & Enter, Robbery, Theft Over $5,000. The five comparable indicators TPS publishes for this series.
+                </Caveat>
+                <Caveat kind="scope">
+                  <strong>Neighbourhood coverage.</strong> {resolution.unresolved_incidents.toLocaleString()} reports ({resolution.unresolved_pct.toFixed(1)}% of the imported corpus) have no usable 158-neighbourhood assignment. They remain in Toronto-wide counts and rates, but cannot appear in neighbourhood charts, maps, or feeds.
+                </Caveat>
+              </div>
+            </div>
+
+            <div class="about-section" id="cadence">
+              <div class="eyebrow">§ 05 · Refresh cadence</div>
+              <h2>This is a trend dashboard, not a live ticker.</h2>
+              <p>
+                The TPS source refreshes quarterly. There is no "Recent incidents" widget, no relative date strings ("3 days ago"), and no live feed. The chronological feed uses absolute dates only. The site itself is <strong>updated periodically</strong>, with no fixed schedule. Every freshness number on the page (topbar pill, this card, the footer) reflects the data itself: the latest report date the imported data covers, and when it was imported, not when the site was last rebuilt.
+              </p>
+              <div style="display: flex; gap: 16px; margin-top: 16px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); flex-wrap: wrap;">
+                <div style="padding: 8px 12px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-2);">
+                  <span style="color: var(--ink-3);">SOURCE REFRESH</span> &nbsp; Quarterly
+                </div>
+                <div style="padding: 8px 12px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-2);">
+                  <span style="color: var(--ink-3);">DATA THROUGH</span> &nbsp; <span style="color: var(--accent);">{through}</span>
+                </div>
+                <div style="padding: 8px 12px; background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--r-2);">
+                  <span style="color: var(--ink-3);">IMPORTED</span> &nbsp; <span style="color: var(--accent);">{importedAt}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-section" id="ethics">
+              <div class="eyebrow">§ 06 · Ethics</div>
+              <h2>What this dashboard doesn't do.</h2>
+              <ul style="font-size: 14px; color: var(--ink-2); line-height: 1.7; padding-left: 20px; margin-top: 12px;">
+                <li>No language calling a neighbourhood "safe" or "dangerous." Show the data, don't label the place.</li>
+                <li>Counts are the default (ADR-009), but rates per 10K stay one toggle away everywhere — switch to rates when comparing neighbourhoods of different sizes, because raw counts visually penalise high-population areas.</li>
+                <li>No addresses, no point-resolution maps, no per-incident identifiable detail.</li>
+                <li>No relative-date framing ("yesterday"). This is a trend tool, not a crime ticker.</li>
+                <li>Colour is never the only cue. Every category has a distinct glyph and a label.</li>
+                <li>WCAG AA contrast minimum, including chart strokes and choropleth fills.</li>
+              </ul>
+            </div>
+
+            <div class="about-section" id="colophon">
+              <div class="eyebrow">§ 07 · Colophon</div>
+              <h2>Colophon.</h2>
+              <p>
+                Type: <strong>Space Grotesk</strong> &amp; <strong>JetBrains Mono</strong>. Charts hand-rolled in SVG against an oklch palette. Map: Leaflet with CARTO tiles, 2021 Census neighbourhood polygons. Built with Astro; reads pre-aggregated JSON.
+              </p>
+              <p style="font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); margin-top: 16px;">
+                Toronto Crime Pulse · v{appVersion} · No cookies. No ads. No paywall. Open methodology.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Site>

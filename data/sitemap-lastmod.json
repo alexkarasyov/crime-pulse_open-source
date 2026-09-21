@@ -1,0 +1,650 @@
+{
+  "https://crimepulse.ca/": {
+    "hash": "8e9ee62b655905e9386cf0d0357f18d1b47009a5bdc2a3c9efbb4671eb838744",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/about/": {
+    "hash": "9b645da4a95018fceb1e0ac3303fd077b8406be2cb1a5c9906302a42b906dced",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/compare/": {
+    "hash": "611b353f43dad8786b14bf4da70310db87e9ba8ff608e3d0b1d1ae4af7ff4651",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/": {
+    "hash": "e90f405f7ff0c8a2582ab28ad029a1e6b42463ebe37836b2bc94f8e58a453101",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/1/": {
+    "hash": "a3a75be7c99af26f9fa4d84655d177a39e4a39b2d2a7ff8310d59e177403c46c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/2/": {
+    "hash": "298e7b10ae8227dd25122c7d6ab16ace6f812d8a6bb39a359337d3df4ddf29a5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/3/": {
+    "hash": "4a65b78e7f14e837edc88b6691915e2a67ab01217c30ab5615c3d8624d317482",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/4/": {
+    "hash": "4b913fbfcce8324f3f7af122597d63bfa1579a5000b513a68da49a1fa911f674",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/5/": {
+    "hash": "f8406d923611a92cf7a75dec7c07757e8800c4f1d3382df0a82ee95f0be66608",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/6/": {
+    "hash": "1a81aaddc5fdb2a5b8215a5df9396310d8ba652ae69994eb90e0c8badb28f0f9",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/7/": {
+    "hash": "7cd1dbfcd6c03ea085881aeb1a867150fe6b3373e5f23b1f85475991f67eace8",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/8/": {
+    "hash": "1e06bebe8b3ed438aaa66363d6500c7492447e22c8a2b73dc0d068f3d6a1e7b8",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/9/": {
+    "hash": "01b44dcdda1862625b110b9db2f75cb4a36e368b31ecd70e71b2d5b7cf8adee9",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/10/": {
+    "hash": "ca9916484e25b13cfc2ec844c2828d01caf35876c92bf1c10af4d178317207a3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/11/": {
+    "hash": "47cd0b81cdef5dc39e58f9e0af97028ced730a0bc7359bdc04c0ace0f5346b4f",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/12/": {
+    "hash": "a35962bf3786fd7a6ef4f3260f5755b774d4938d7e8aaf236a3e40db29939954",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/13/": {
+    "hash": "1aafb0420fed86e55c24e00bb8c876d1e3fc5f1136119d0a1d5660e5540da932",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/15/": {
+    "hash": "a1b519ada32e6bb77a2a14064baa8b204fbeaa2c04850eb96409456957be37b7",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/16/": {
+    "hash": "31ebc5fb461e240723904dc5f3ec2449a39ba00515e262894291b13b1b47ffa3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/18/": {
+    "hash": "5e5c730b735197a3e447890af2a460ff6cf1badf561d6f86a880b7a376fdb600",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/19/": {
+    "hash": "0b06f37dd8cfe356eee3caac0aac33167857e506ec9848f6be0de2e0b960a66d",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/20/": {
+    "hash": "a759b5c29d762427ee33ab5f97bed0596297f9a8de538f3cc93b664fab384378",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/21/": {
+    "hash": "1e238691fc847cd15915efd5472a4ef051b8d2b9b848f57fb4ae2ff09dbfb1b1",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/22/": {
+    "hash": "7377e36a3ed1a007df787660a99374c31952a0a0ade30d9d91e9333d7a0f2ae7",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/23/": {
+    "hash": "75f7406d8ea822093f27660e0564334fd5fb5d947cc2dbf9fca006d7c7387c70",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/24/": {
+    "hash": "3fcea721ca7a7419c8a32f65336a72fc9d64e667589d856e820d584c1944cdc5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/25/": {
+    "hash": "f6613442b8f4e598bbc334b0f06151af26ced6a2f9cec6eb7320eeda97eb29f6",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/27/": {
+    "hash": "e622a63b0862c4f0d17b0c9ac40719f06ab1b2cc7bd64216b02f2d7486eda977",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/28/": {
+    "hash": "840c5c15a1d95b87f463c6216df356e88c49892e5f655d0c83a6eb128cf900c4",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/29/": {
+    "hash": "ba7fccde8dee9c2d4e490a6081c8eee18cbebf0cf42ae0d5dbfba6dfc8d86cd5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/30/": {
+    "hash": "cd1ee72e5fb5723ee70eac4904f52b5a95b86754b40107249c986467cffeeeb2",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/31/": {
+    "hash": "ae4579ad5e9faf5df142a1ca1196e7126e13246eccd6442d339c68caa8074d10",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/32/": {
+    "hash": "022977974ac13dfb0fe29e21ba0dbd2db3733fac87ee9f2a83c93866b56899d0",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/33/": {
+    "hash": "ac433ba71fba58458bc8e21a3614ecd69230162c78e8e5b997d7bf5957ba32a3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/34/": {
+    "hash": "3223c8361a0f0bff28dd97c554742746892570e9eb0e21d7d9a8ab077b4d2fae",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/35/": {
+    "hash": "50a4351d386e27613b8102219e9708f096e906141981bf06cc246b9847a6b56b",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/36/": {
+    "hash": "f14170a7082454f119b06e2d2539bd86ac93999f1cffada1cdf5f8c431c96e22",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/37/": {
+    "hash": "3e0adc7cd8f3782f474229c2483f5ca5666c4e394a2e3ed69444ea2620435ae5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/38/": {
+    "hash": "256920b5c82ce0c51f09bbc6a49b6ad2fb68ac1d3d742ec1ac6e7a6344df8add",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/39/": {
+    "hash": "55c457d75710aa5e8a87070c4a00cf49a7c61213bd2001c179bd2fe078cd6883",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/40/": {
+    "hash": "393ed4184b79f50b7e0590b0b9bd13ea4fe1d47fc00b4fcea38dfabc564b6827",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/41/": {
+    "hash": "74094c1ce36ac20e04db37a0fe9353e60b42eb18347ba548d120166fd8c62639",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/42/": {
+    "hash": "b887a94e1f4520b894031acf79269e6f7199543be254dd8fcb6c6699bb9bb8f3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/43/": {
+    "hash": "fa51ac50d626375583cbc1bc550138f87abc98fed744bef19427d27c917512a8",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/44/": {
+    "hash": "26649ceee6415ffe97714789be161f30ba895140458a6aa69dc3cb2b7e56f773",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/46/": {
+    "hash": "66df150d8dc93dd39e3078c537a8335ffeb417f61fc77cc5372224c2a14ad314",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/47/": {
+    "hash": "83f53a2952ca96bd3191eacfe29e1d2eb0f53b946285450d26ed40d872f92bc9",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/48/": {
+    "hash": "5dc352b77a71a0fcf33a9f368c47b28cd7e49048a86530ffebe0953e25c17864",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/49/": {
+    "hash": "870ec5442bf3ec4bd8d67974f57337c64b7f52bd066dd2e25cda535185b72406",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/50/": {
+    "hash": "26d63c3d475244cd429445de905dffad4bfb8c979b5a7dab8674940c7bb2a805",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/52/": {
+    "hash": "045e07612fb34fa35daa2787ceb0fe3ff51fe13b57d9abd5606a9645e5bfb915",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/53/": {
+    "hash": "b74052dd40b9236daeeb35d77124311dee1479b3cc67b414650ea9f16015af0a",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/54/": {
+    "hash": "eafa070359c509f6e3380905b09758f4e6677d17456aa68d0f7f376864aabb5a",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/55/": {
+    "hash": "f16244062f91782e67ddfb6cfa375fff8e8733cce6a615ab7a8557cb5d8dccda",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/56/": {
+    "hash": "7fe35f8b5c1895f99e041f5dbd9d9ba38e002cd8c4fd0f61477f2d8ff2a3eea7",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/57/": {
+    "hash": "0e991e20b0167f056daeea102b425057063db5e8dec0e7426cd4cfd253fc3e17",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/58/": {
+    "hash": "140d7a051db21eb5f95f82b12ccfde450b70f8f188db86a0af30b059074318c3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/59/": {
+    "hash": "7b494376a53d81cce8812cb498c975831d03a2c40c15de93ba0d7df2f3f5b4c2",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/60/": {
+    "hash": "49a4ac406d26db4d28b8bc2b04b836a1cd7cb35755705dde04892f5bee31feb8",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/61/": {
+    "hash": "a3daa22db38e4969ee58b1644d64fdd2769f2a46389f776bcf6e704a1c72dc5e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/62/": {
+    "hash": "6c21f720282987877737c8fea7cd565c0f96510f0252a801faa20ae6f2928398",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/63/": {
+    "hash": "7fedca9d7e44717f90d4bee97e373ebd6732369a94df3c6c9d22bb02a4a2c6f5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/64/": {
+    "hash": "decf9f9aa94b2c6c2e08f735cbfdad5083e8899785487a466da62289aa8038e8",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/65/": {
+    "hash": "e51883e6a179864d0e38e37cc49845e60d6c4aa568b2233a3fbbbf44ea2f4e94",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/66/": {
+    "hash": "1ab41974ed19fee0f7e75ca6411ae9909fc73af1c3a2ecf37e153cf06aa66243",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/67/": {
+    "hash": "1e15cbd23f19867ff21149f74884e67bde766a8d3469043bcce3aa096569de16",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/68/": {
+    "hash": "81711c29f0be7a6bd60dfc777ed01645299e161f69c7c6469573cc23b9d78c4d",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/69/": {
+    "hash": "e83cd9ffc406f24bb11d3ec039f753e3eb7f8127078a8e469ace38fc1fa1547e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/70/": {
+    "hash": "ec69ad512b2abaf39a09b36d92847e5bee9d2fcba7350f48cea78752615554c4",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/71/": {
+    "hash": "fcf1b41247bb6e395dbb5498d4a78c395f97bbf00867dccb59732cf2757b8ed8",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/72/": {
+    "hash": "c5f5090c88b3a8ef2faa1cda622c9347db7f18cbda794908cb97c74c05b9a587",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/73/": {
+    "hash": "52467c4b54edc857bfe42c0a3f10ab587afd906d3f6c1dd72741ba7c44355ec1",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/74/": {
+    "hash": "e8e1f7e49c3260427da0032180bc92b2cdb2157d5e816ef342882561a8ae5e88",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/78/": {
+    "hash": "4a6e665c0f726a47531366ac6e5b8b7398b6152b2a9e1743638a76a954f56e1a",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/79/": {
+    "hash": "9d14b424d346f976a51362e6bfae545b0e36125a2b7196e6865a27b7bb6c5d2c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/80/": {
+    "hash": "d7fb93bc8683ddbeda8f9a060b44621c110f4f87b9982f60a9d765606b844d14",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/81/": {
+    "hash": "3cab2c5c46fb2dfd00785f495d63b75403b773606f8eec4955bc11e99a9046e9",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/83/": {
+    "hash": "1cd468aca122e495b7f51ee3ecbdfbf4b4bc4aca3e08c2f15ca1b665052eb5eb",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/84/": {
+    "hash": "3e7caee16b063c539e7cb6ac0231c9f8964881f22d99e001deb6ea820b692248",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/85/": {
+    "hash": "38888d6b8cf3f0c50bdae1b4519de77accf6e7623d01582529076fa6c7fef3dc",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/86/": {
+    "hash": "1d3f8b61322775e6b241090f5c041acf75770e675b82d27c76d283f10cea6a9c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/87/": {
+    "hash": "856e7be391f6d36f3bda5a5fa0dee11579f0064bb055a02a473cbc0aa1376e73",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/88/": {
+    "hash": "73b06547b29848faad8333b84997ad3b0d9b8661546fe7f2168d2f1381fbee15",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/89/": {
+    "hash": "86fe67d7a3915264ff3a64f012cef8ad7dfdb6eac90030f48f0a61687609bbec",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/90/": {
+    "hash": "96dde19aa49f317cd5862eef68a84521330bfd7407d7a7138f433454bc937044",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/91/": {
+    "hash": "159bdb81b3508c743ca83097d89b623e97711d7dbcb2fc26abc56c2ba192870a",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/92/": {
+    "hash": "777aff96a5716548b6437ed1d1a19c7810439bde53c33c9ee26f0580ba6da9a6",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/94/": {
+    "hash": "dbdce2df536bcb69c764c9ba74092df6b48b8c1ab06bb8ab61ec7f98d94ae082",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/95/": {
+    "hash": "a133fe07ae1ac24bebc29635f4d189614df7b79457ab94ef393c38ce32bc855c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/96/": {
+    "hash": "7303080efd8c14662a5c28f0f6385a1c6629a4e31429c61d5b80d36e349397c6",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/97/": {
+    "hash": "2465882353cd03dafd7b9c0b0d12602a0d4ce2e8736345e38b7d5f211ae9903b",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/98/": {
+    "hash": "c5b0ef6084f4b8ac875a799ffe832a8cf4c9b30d38bb2b2aa9bedf191891d9df",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/99/": {
+    "hash": "0a177847c8f0e61d938a59507018f982b2148d91ab536afc18ff1db2cd72b939",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/100/": {
+    "hash": "bb97ed8ee9c3f28b52c1b4780c7f60c7fd4f81b23c70fe4822d90c97b941faf3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/101/": {
+    "hash": "4aeefd9b9fc3542a60eb571290a51604d28ce626763dcc7853facb7c531b46c0",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/102/": {
+    "hash": "b7cf146ca128424bce4e4099e8bd4dd72734d1c1ea7d593b241f384122ec7e33",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/103/": {
+    "hash": "fc5bfc71ace415dfc4eb2adfbd698b4314d19ab7b5a7af3e894fb853c558ba9c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/105/": {
+    "hash": "4347b8293b2a629062884498a504a299f93f083dfd064ff3bf61419195439a13",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/106/": {
+    "hash": "788f1dd9c948fe0e048a5aeb1ff8b7979578a0439597053b880403e4190f9de1",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/107/": {
+    "hash": "45bf41336c42b28013905eda53dd03c97ec0f112fdbdc878841177eabd4f057c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/108/": {
+    "hash": "a7300c95e7602027a446e9d51fb7c060b8fcae4ebfaa75bc2926f0c23f30c1cd",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/109/": {
+    "hash": "e4cac7b37a272c3230e6a16d95004658c35abc21f9daa7317a894b93ebc63777",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/110/": {
+    "hash": "aeab923de200d2098bc45e922ee0bd53e004431e4cd7272c8a61e45182da4c91",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/111/": {
+    "hash": "8d3d5b75b6f1baf6737fdfc933917952d35ce08ac0ee3059d41de1048414c3f2",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/112/": {
+    "hash": "7c2fb854df08a5be23be496ad5c3ae05c91e069a0bfe6f851e33785518658b7b",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/113/": {
+    "hash": "18c0717c026bff91881da6137adc25bb7f236456ec3e66b7a5d62fe072a6cab3",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/114/": {
+    "hash": "08c584d75b5dd6010f8f9394435001638cf15e6b28092308d5a30832ca161254",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/115/": {
+    "hash": "1dc09d626a19b5285dcea7606c02a101904cddf186afe5cc288120a8f9c78895",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/116/": {
+    "hash": "7e218250acb34fccdb04dc842b618c55d1f61500abdeef95898bda61e5cf5680",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/118/": {
+    "hash": "5da34768e66a21ea0410fe6e587226f22130958b07ab53a06f687834d35fe3d1",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/119/": {
+    "hash": "16967d074dbbd663f26d70bac83c1c2549351734ca4f01c5f1e6dcf21236f164",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/120/": {
+    "hash": "d0c2cad985d1f691ee15930b4bc6b31ab0ab2206320e7b639fdbd0665c2e0ec2",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/121/": {
+    "hash": "7ca33a76af92f547c3532f0fe36b2e7adf40c5692ea9cdcce7e1dd81394026a1",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/122/": {
+    "hash": "250b87b5d6fd4b09598fa465c5957045251d8012ac1824d72505d4846eddad7c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/123/": {
+    "hash": "312b42bb869240f20bc8a8407c554d4cb4fcfc9ded481e319dbd7bee255c15e9",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/124/": {
+    "hash": "6c6b99d690c77f7d66ff25fdfd34b329d007aeafb62baa20b058f0b2cfc31a53",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/125/": {
+    "hash": "696907d057001f8b6346fa8e5d83ee181bec38aa47f5685fc5275ebf70b2af03",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/126/": {
+    "hash": "2d28ac333374d3fcd1c9abcea3e42a16bab3cfe041b534dd390adf4f7f24411e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/128/": {
+    "hash": "58229ca759fd2c11e89b190d226cf2953d32223613ebbcf4fff0c8664a02f726",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/129/": {
+    "hash": "23cc23d29a5677d54caa39c21b1f1e4e9503dbaf99a35728532e27c62c164778",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/130/": {
+    "hash": "4d969176fb5372bfb08e1b7fc2d31a22f5781e289667ee026c2592d4d3873043",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/133/": {
+    "hash": "ad634e58c49b1ba8fb63969e3fe29a269e53577b70bad114772732c8bb3c639c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/134/": {
+    "hash": "5df9004ac9f1f61257a271fcd7addee995f6f6b615ff50b4b29714b797217c37",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/135/": {
+    "hash": "824facccc21aa2ffaa13810c65e31de46679244621aff69910d1b9e3b02f3f90",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/136/": {
+    "hash": "70851bafe92cf55605ed7a0dcf9594bc52a9446e6f2fb1881f1d842fec62c913",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/138/": {
+    "hash": "011f90119b2ce91b8bd5a2eff294d7636cd1fa6db37ff16d4d30373c624b1f69",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/139/": {
+    "hash": "85ee6eee7a5c84e4cc51c7ac97c105bedae984f80f0c3edc5e9ef1a86b9acc3f",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/140/": {
+    "hash": "c1892ea00a7e7b1597637b473d2d63cb021534bc251fc1e6e38df3cd7f0678a5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/141/": {
+    "hash": "97dfb78e76dc98da6da61f54232f76c2bbad036563920265f4e7c52345c68ad4",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/142/": {
+    "hash": "d180003e55c5c3b32a270686c651ebf4c8712c6ccf8d08bd1a0f7fba9754e32c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/143/": {
+    "hash": "09b5bd22562c607430c3f013829143b2db8a615f47dd1a89b7ba70e73b18bc8e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/144/": {
+    "hash": "f193d4686d3e4259c94dfd927833da497d7e59a95bb6e05bc8a4775b40885448",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/145/": {
+    "hash": "c1606dc9bcaeafcf7f71bc96d16201ab792f9201dc8673cdd17c872fbe9a1b6c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/146/": {
+    "hash": "0ebce1e66a1c0c1a9ace8fb3878bcf2c713669408b325ea6eac36b2dd659b069",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/147/": {
+    "hash": "e8d9651af11d6aa34ba2c25d110fa76c1cde9284999248da723429ec8ad6d357",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/148/": {
+    "hash": "fdcf3c1eba8ae14cc34a009a82e9c628aa7e84bf2bb4c7f78088e0afae44d3c9",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/149/": {
+    "hash": "ea68037a4d02dbb7f19996480be1f4bd944618a6d46efb09ddfbc4df4aee6d17",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/150/": {
+    "hash": "7a722dc3d2f880dd776fa0ec3d36da51f98d3b94dde98690c8696082c9907940",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/151/": {
+    "hash": "7ebfd0c88f82d8b8f3679b3536f8536995dd4143d1b357e00e5ae3b8fd23be45",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/152/": {
+    "hash": "f0e1c8f5cc04d03ae3930a3ad21e91c4a291a6edf59abe8c6da709bf004dc847",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/153/": {
+    "hash": "2dcd8517bf5f44a49ea8272718cdca721bf2380a3738a0c90faff27e12b094c6",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/154/": {
+    "hash": "a27acffe237f8efaf2e57a1d68ded9aa6f773a409e3fda1f407ce2d707ac5113",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/155/": {
+    "hash": "a457386cdcadb50936547e6f1acbda76091c9d9302d1f6ebdd1d9ef064ccf58f",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/156/": {
+    "hash": "e633ad0e21f5534c846bd305463f7a2247e33594549884ac60bab14fe1d79daa",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/157/": {
+    "hash": "5ce23ef0789e6473aaeb41268e1757a1b3c975918dc5f86bac746125131d5396",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/158/": {
+    "hash": "43e2cadcf62413283f805ae99d712ac10f52a226a8e93de4ab10ea9ab3ad314e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/159/": {
+    "hash": "b5376f407caab90c637c9281d16a72de2167e322713882734ed60c134f7a0953",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/160/": {
+    "hash": "9237e051599aa37bb66bcd9824704292aac144f3a1460984af0de6e7d5408848",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/161/": {
+    "hash": "ee61e7fc9c4eb72aa1c01621593b811f014ab7167bad02b4f4a82226733eaecc",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/162/": {
+    "hash": "6b9eebba736c33ec6d09599757ee7e672ebc775fffc215bfe9c7441e1d173a7b",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/163/": {
+    "hash": "ffec58bd1879c1b1cbab6e0b81325c4d96aa332642b5673a938a33d21b46b2de",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/164/": {
+    "hash": "18659446d00a87f3282f9f0097fc878c454fa0a8aeffc3c378eeea6b6bedb7e5",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/165/": {
+    "hash": "2716b1ccdad1362374aa30d012234ba778288e6b16235ec0bebbb8b59b4145cf",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/166/": {
+    "hash": "c03d9ed50ec06758c0ba89e5bbb5d08a6723153b45cc3c69f31d75961cabd50c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/167/": {
+    "hash": "e22e813075131cfb48666930fe1e30d9422e266613c758c31ba2cc62a8ad082e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/168/": {
+    "hash": "076d16641a3d7999a99f20d84b27d21ae6c4958cfaa4f6db97e30dfe77d9885c",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/169/": {
+    "hash": "832995230e3656331288f196c9b61e0228e112797f19fea81bfd0905d2cc767b",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/170/": {
+    "hash": "0ae2646194227540360abe3a3e521e200a7997fe0eaa2741a9b7f8abe5a80a30",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/171/": {
+    "hash": "13517d5fdbe8c84aa9aed5ac24e17ae4809ad9cafb6a69394621ee551e99d24e",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/172/": {
+    "hash": "80e096c177da8653448307b2735917a1a882f8adff4c1e3458707ef9eaf910ad",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/173/": {
+    "hash": "3f86120bd5b130c9e275a199fc78bd17f6b5eda5dc1ed31a0848cd783b116ab4",
+    "lastmod": "2026-09-12"
+  },
+  "https://crimepulse.ca/neighbourhood/174/": {
+    "hash": "7ddeca6a5c3c8a3f06b2b8d7140076aa7fcb18924b0854b7515707275f77b7d4",
+    "lastmod": "2026-09-12"
+  }
+}

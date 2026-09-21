@@ -1,0 +1,105 @@
+---
+// Base layout for Toronto Crime Pulse.
+// Loads the full design-system styles ported from styleguide/styles.css
+// (P1.7a): tokens (palette, type, spacing, radius, shadow scales) plus the
+// reset and component/layout styles.
+//
+// Fonts are self-hosted via Fontsource for predictable rendering, performance,
+// and to avoid unnecessary requests to Google Fonts infrastructure.
+// "Live Signal" redesign: Space Grotesk (display/UI) + JetBrains Mono (data).
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute path to the OG image (under /og/). Defaults to /og/default.png. */
+  ogImage?: string;
+  /** Emit a noindex robots meta and skip the canonical (used by 404). */
+  noindex?: boolean;
+  /** JSON-LD nodes to serialize into the head (schema.org structured data).
+   *  Built with the helpers in src/lib/schema.ts. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const DEFAULT_DESCRIPTION =
+  "Ten years of Toronto crime data: TPS Community Safety Indicators as incident counts, with rates per 10,000 residents on toggle, across 158 neighbourhoods.";
+
+const {
+  title = 'Toronto Crime Pulse',
+  description = DEFAULT_DESCRIPTION,
+  ogImage = '/og/default.png',
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+const absoluteOg = new URL(ogImage, Astro.site ?? Astro.url).toString();
+const ogAlt = `${title} · social preview card`;
+
+// Cloudflare Web Analytics. When configured, this beacon sends page-view
+// telemetry to Cloudflare; the public site therefore makes no absolute
+// "no tracking" promise. Dev/local builds without a token ship no beacon.
+// The token is public by design — it appears in the data-cf-beacon attribute
+// either way — so PUBLIC_ is the correct prefix.
+// Enable with: PUBLIC_CF_BEACON_TOKEN=<token> npm run build
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    {/* No-FOUC theme init — must run before first paint. Dark is the default
+        (matches the shipped product); a persisted choice wins. See THEMING.md. */}
+    <script is:inline>try{document.documentElement.dataset.theme=localStorage.getItem('cp_theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex
+      ? <meta name="robots" content="noindex, follow" />
+      : <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#090d13" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteOg} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogAlt} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Toronto Crime Pulse" />
+    <meta property="og:locale" content="en_CA" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOg} />
+    <meta name="twitter:image:alt" content={ogAlt} />
+
+    {jsonLd.map((node) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(node)} />
+    ))}
+
+    {cfBeaconToken && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+      />
+    )}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

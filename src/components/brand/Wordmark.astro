@@ -1,0 +1,49 @@
+---
+// Wordmark — "CRIME / PULSE — TORONTO · 158 NBHDS"
+// Two-line mono lockup. The "/" between CRIME and PULSE is accent-coloured.
+// Ported from styleguide/brand.jsx.
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+<div
+  class="wordmark"
+  style={`
+    display: inline-flex;
+    flex-direction: column;
+    gap: 1px;
+    font-family: var(--font-mono);
+    line-height: 1;
+  `}
+>
+  <div
+    style={`
+      font-size: ${compact ? 11 : 12}px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--ink);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    `}
+  >
+    <span>CRIME</span>
+    <span style="color: var(--accent); font-weight: 400;">/</span>
+    <span>PULSE</span>
+  </div>
+  <div
+    style={`
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--ink-3);
+      text-transform: uppercase;
+    `}
+  >
+    Toronto · 158 NBHDS
+  </div>
+</div>

@@ -1,0 +1,21 @@
+Toronto Crime Pulse
+===================
+
+The source code in this repository is licensed under the MIT License.
+See LICENSE.
+
+Incident records (Toronto Police Service Community Safety Indicators) and
+City of Toronto neighbourhood boundaries are open civic data:
+
+  Contains information licensed under the Open Government Licence – Toronto.
+  https://open.toronto.ca/open-data-licence/
+
+Population estimates, Crime Severity Index, and CMA crime-rate tables remain
+under the Statistics Canada Open Licence
+(https://www.statcan.gc.ca/en/reference/licence). Keep the attributions already
+in those files, of the form:
+
+  Source: Statistics Canada, Table ….
+
+This project is not an official product of Toronto Police Service, the City
+of Toronto, or Statistics Canada.

@@ -1,0 +1,231 @@
+---
+// Overview screen — Toronto-wide pulse. "Live Signal" overview redesign
+// (redesign/prototype/index.html): editorial hero + city-total bigstat, a
+// total-rate choropleth, year trend + CSI context, and caveat-style signals.
+// Reads the build-emitted aggregates in public/data/aggregates/.
+
+import Site from '../layouts/Site.astro';
+import Caveat from '../components/Caveat.astro';
+import CSICard from '../components/CSICard.astro';
+import CmaCompareCard from '../components/CmaCompareCard.astro';
+
+import OverviewHero from '../components/islands/OverviewHero.tsx';
+import OverviewYTDFootnote from '../components/islands/OverviewYTDFootnote.tsx';
+import NeighbourhoodPicker from '../components/islands/NeighbourhoodPicker.tsx';
+import CategoryGrid from '../components/islands/CategoryGrid.tsx';
+import CategoryPicker from '../components/islands/CategoryPicker.tsx';
+import MapArrowToggle from '../components/islands/MapArrowToggle.tsx';
+import PrimaryCatText from '../components/islands/PrimaryCatText.tsx';
+import UnitPhrase from '../components/islands/UnitPhrase.tsx';
+import OverviewTrend from '../components/islands/OverviewTrend.tsx';
+import LazyMap from '../components/islands/LazyMap.tsx';
+import MapSidebar from '../components/islands/MapSidebar.tsx';
+import ViewRail from '../components/islands/ViewRail.tsx';
+
+import { torontoSeries, torontoTotalSeries, torontoPartialSeries, partialYearThrough, allNeighbourhoods } from '../lib/aggregates';
+import { CATEGORIES } from '../lib/categories';
+import { pctDelta } from '../lib/format';
+import { webSiteSchema, datasetSchema } from '../lib/schema';
+
+// Server-rendered with full visible years only (no YTD); YTD-aware islands
+// hydrate and extend if the user opts in.
+const series = torontoSeries();
+const totalSeries = torontoTotalSeries();
+const partialByCat = torontoPartialSeries();
+const ytdThroughByYear = partialYearThrough();
+// YTD coverage date for the rail's YTD toggle caveat (e.g. "2026-03-31").
+const ytdDates = Object.values(ytdThroughByYear);
+const ytdThrough = ytdDates.length ? ytdDates[ytdDates.length - 1] : undefined;
+const pickerOptions = allNeighbourhoods()
+  .map((n) => ({ id: n.id, name: n.name }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+
+// Year axis derived from the data so labels never drift on refresh.
+const fullYears = series.assault.map((p) => p.year);
+const firstYear = fullYears[0] ?? 2016;
+const lastYear = fullYears[fullYears.length - 1] ?? 2025;
+
+// SR-only summary numbers.
+const assaultFirst = series.assault[0]?.rate ?? 0;
+const assaultLast = series.assault[series.assault.length - 1]?.rate ?? 0;
+const assaultDelta = pctDelta(assaultFirst, assaultLast);
+
+// Auto-theft signal: the year-over-year move into the latest year, after its
+// peak — computed from real counts (the prototype hard-codes 32% / 2023).
+const autoTheft = series.autoTheft;
+const autoTheftPeak = autoTheft.length ? Math.max(...autoTheft.map((p) => p.count)) : 0;
+const autoTheftPeakYear = autoTheft.find((p) => p.count === autoTheftPeak)?.year ?? lastYear;
+const autoTheftLast = autoTheft[autoTheft.length - 1]?.count ?? 0;
+const autoTheftPrev = autoTheft[autoTheft.length - 2]?.count ?? 0;
+const autoTheftYoY = pctDelta(autoTheftPrev, autoTheftLast);
+// Direction and peak framing are derived too — a refresh where auto theft
+// rises (or the latest year is itself the peak) must not render "fell …
+// after peaking".
+const autoTheftDir = autoTheftYoY <= 0 ? 'fell' : 'rose';
+---
+<Site
+  title="Toronto Crime Pulse · Overview"
+  description={`Ten years of Toronto crime trends (${firstYear}–${lastYear}) from TPS Community Safety Indicators — incident counts and rates per 10,000 residents across all 158 neighbourhoods.`}
+  active="overview"
+  showTopbarUnit={false}
+  jsonLd={[webSiteSchema(Astro.site), datasetSchema(Astro.site)]}
+>
+  <ViewRail
+    client:load
+    slot="rail"
+    ytdThrough={ytdThrough}
+    scopeHint="Chips set page scope — the hero, trend, and signals sum across the selected categories. The primary lens (map shading, category readout) is picked on the category cards."
+    yearHint="Applies to the hero, trend, map, and signal cards."
+  />
+  <div class="page" data-screen-label="Overview">
+
+    {/* ─── HERO ─── */}
+    <section class="hero">
+      <div class="main">
+        <div class="hero-grid">
+          <div>
+            <p class="hero-eyebrow">
+              <span class="eyebrow">Toronto · 158 neighbourhoods · {firstYear}–{lastYear}</span>
+              <span class="divider" />
+              <span class="eyebrow"><UnitPhrase client:load /></span>
+            </p>
+            <h1>Ten years of Toronto crime, <span class="accent-mark">by the numbers</span>.</h1>
+            <p class="hero-sub">
+              Community Safety Indicators — raw incident counts, with population-normalised rates one toggle away so every neighbourhood can be measured the same way. <strong>No rankings, no "safe" or "dangerous" labels.</strong> Just the numbers, the trends, and the caveats behind them.
+            </p>
+            <div style="margin-top: 28px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+              <NeighbourhoodPicker
+                client:load
+                options={pickerOptions}
+                variant="hero"
+                placeholder="Find your neighbourhood…"
+              />
+              <a href="/neighbourhood/" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px dashed var(--border);">
+                Browse all 158 →
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <OverviewHero client:load totalSeries={totalSeries} torontoSeries={series} />
+            <OverviewYTDFootnote
+              client:load
+              partialByCat={partialByCat}
+              throughByYear={ytdThroughByYear}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── CATEGORY GRID ─── */}
+    <section class="section">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <p class="section-eye eyebrow">By category · {lastYear} <PrimaryCatText client:load template="$U" /></p>
+            <h2 class="section-title">Five indicators, one scale</h2>
+            <p class="section-desc">
+              Each category carries a fixed glyph as well as a colour, so the encoding survives colour-vision deficiency and greyscale print. Tap a card to make it the dashboard's primary lens.
+            </p>
+          </div>
+        </div>
+        <CategoryGrid client:load torontoSeries={series} />
+      </div>
+    </section>
+
+    {/* ─── MAP ─── */}
+    <section class="section">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <p class="section-eye eyebrow">Citywide · 158 neighbourhoods</p>
+            <h2 class="section-title">
+              <PrimaryCatText client:load template="$ $U, $Y · by neighbourhood" />
+            </h2>
+            <p class="section-desc">
+              Neighbourhood polygons shaded by one category at a time — pick it with the selector on the right — in the active unit (rate per 10K residents, or counts via the toggle), for the selected year. Hover for a quick read; click to open the full neighbourhood view.
+            </p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+            <CategoryPicker client:load />
+            <MapArrowToggle client:load />
+          </div>
+        </div>
+
+        <div class="map-wrap">
+          <div class="map-canvas">
+            <LazyMap client:load />
+          </div>
+          <div class="map-meta">
+            <MapSidebar client:only="preact" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── TREND + CONTEXT ─── */}
+    <section class="section">
+      <div class="main">
+        <div class="two-col">
+          <OverviewTrend
+            client:visible
+            torontoSeries={series}
+            totalSeries={totalSeries}
+          />
+          <div class="context-col">
+            <CSICard />
+            <CmaCompareCard />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── SIGNALS ─── */}
+    <section class="section" style="border-bottom: 0;">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <p class="section-eye eyebrow">Reading the data</p>
+            <h2 class="section-title">Three numbers that need context</h2>
+          </div>
+        </div>
+        <div class="three-col">
+          <Caveat kind="warn">
+            <strong>Auto theft {autoTheftDir} {Math.abs(autoTheftYoY).toFixed(0)}% in {lastYear}</strong>{autoTheftPeakYear === lastYear ? '' : ` after peaking in ${autoTheftPeakYear}`}. One of the steepest single-year moves in the dataset.
+          </Caveat>
+          <Caveat kind="exclude">
+            <strong>Sexual assault is excluded</strong> from these five indicators and is reported separately by Toronto Police.
+          </Caveat>
+          <Caveat kind="info">
+            <strong>Counts by default, rates one toggle away.</strong> Raw counts are the unfiltered record; population-normalised rates keep dense and sparse neighbourhoods comparable when you switch. City-wide rates use annual StatCan estimates; per-neighbourhood rates use the 2021 Census (25% sample).
+          </Caveat>
+        </div>
+      </div>
+    </section>
+
+    {/* Hidden, SR-only chart summary — pairs with the visual SVGs above. */}
+    <div class="sr-only">
+      <h2>Data summary</h2>
+      <p>
+        Toronto-wide assault rate per 10,000 residents moved from {assaultFirst.toFixed(1)} in {firstYear} to {assaultLast.toFixed(1)} in {lastYear}, a {Math.abs(assaultDelta).toFixed(1)}% change. Auto theft counts peaked at {autoTheftPeak.toLocaleString()} in {autoTheftPeakYear}.
+      </p>
+      <table>
+        <caption>Toronto-wide rate per 10,000 residents by category, {firstYear}–{lastYear}</caption>
+        <thead>
+          <tr><th>Year</th>{CATEGORIES.map((c) => <th>{c.name}</th>)}</tr>
+        </thead>
+        <tbody>
+          {series.assault.map((_, i) => (
+            <tr>
+              <td>{series.assault[i]!.year}</td>
+              {CATEGORIES.map((c) => (
+                <td>{series[c.id][i]!.rate.toFixed(1)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Site>

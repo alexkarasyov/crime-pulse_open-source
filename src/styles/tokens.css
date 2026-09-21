@@ -1,0 +1,164 @@
+/* ─────────────────────────────────────────────────────────────
+   Crime Pulse Toronto — design tokens  ·  "Live Signal" direction
+   Drop-in replacement for src/styles/tokens.css.
+   Same custom-property NAMES as the prior contract; values retuned
+   to the blue Live-Signal identity. New tokens flagged in INTEGRATION.md.
+
+   THEMING — :root is the DARK default (dark-first product). A light
+   theme lives under :root[data-theme="light"] at the bottom of this file;
+   set data-theme="light" on <html> to switch. Every value below is a
+   token, so themes swap by overriding these vars only. Both themes meet
+   WCAG AA (see map-and-charts.md for the contrast table).
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: dark;
+  /* ── Base — cool near-black, faint blue undertone (hue 256) ── */
+  --bg:           oklch(0.158 0.014 256);
+  --bg-soft:      oklch(0.193 0.014 256);
+  --surface:      oklch(0.214 0.015 256);
+  --surface-2:    oklch(0.250 0.016 256);
+  --surface-3:    oklch(0.300 0.018 256);
+  --border-soft:  oklch(0.300 0.016 256);
+  --border:       oklch(0.380 0.020 256);
+  --border-loud:  oklch(0.480 0.022 256);
+
+  /* ── Text — near-neutral, faint cool cast ── */
+  --ink:          oklch(0.970 0.004 256);
+  --ink-2:        oklch(0.820 0.008 256);
+  --ink-3:        oklch(0.660 0.012 256);
+  /* --ink-4 carries small real text on cards and active navigation.
+     Keep contrast above 4.5:1 on --surface-2 as well as --bg. */
+  --ink-4:        oklch(0.640 0.014 256);
+
+  /* ── Accent — electric signal blue. Single primary. ──
+     L≈0.66 keeps small accent TEXT at ≥4.5:1 on --bg (≈4.7:1).
+     Dark --bg text sits on the accent at ≈4.6:1 (skip-link, dev-pill). */
+  --accent:       oklch(0.660 0.160 256);
+  --accent-soft:  oklch(0.660 0.160 256 / 0.14);
+  --accent-line:  oklch(0.660 0.160 256 / 0.34);
+  /* Brighter tint for the live-signal glow / peak bar (decorative only) */
+  --accent-glow:  oklch(0.730 0.150 256);
+
+  /* Reserved emphasis (unchanged roles) */
+  --hot:          oklch(0.70 0.18 28);
+  --cool:         oklch(0.74 0.10 222);
+
+  /* ── Trend direction — NEW. Value-neutral, non-alarmist. ──
+     up = more incidents (warm amber, NOT red); down = cool teal;
+     flat = neutral ink. Each pairs with a glyph (▲ ▼ —), never colour alone. */
+  --trend-up:     oklch(0.800 0.140 55);
+  --trend-down:   oklch(0.800 0.120 165);
+  --trend-flat:   oklch(0.660 0.012 256);
+  --trend-up-dim:   oklch(0.800 0.140 55 / 0.14);
+  --trend-down-dim: oklch(0.800 0.120 165 / 0.14);
+
+  /* ── Categories — Okabe-Ito-tuned, CVD-safe, AA on --bg. ──
+     Colour is NEVER the only signal — each maps to a fixed glyph:
+       assault ◆ diamond · autoTheft ■ square · breakEnter ▲ triangle
+       robbery ● circle  · theftOver ✕ cross */
+  --cat-assault:    oklch(0.80 0.14 62);
+  --cat-autoTheft:  oklch(0.74 0.13 232);
+  --cat-breakEnter: oklch(0.76 0.13 322);
+  --cat-robbery:    oklch(0.80 0.13 148);
+  --cat-theftOver:  oklch(0.74 0.12 296);
+
+  --cat-assault-dim:    oklch(0.80 0.14 62 / 0.14);
+  --cat-autoTheft-dim:  oklch(0.74 0.13 232 / 0.14);
+  --cat-breakEnter-dim: oklch(0.76 0.13 322 / 0.14);
+  --cat-robbery-dim:    oklch(0.80 0.13 148 / 0.14);
+  --cat-theftOver-dim:  oklch(0.74 0.12 296 / 0.14);
+
+  /* ── Map choropleth ramp — NEW. 6-step sequential blue, low→high rate.
+     Lives in CSS (not hard-coded JS) so it themes. The map layer reads
+     these via getComputedStyle for Leaflet presentation attributes. ── */
+  --ramp-0: #1d2735;  --ramp-1: #23415f;  --ramp-2: #2c5d8a;
+  --ramp-3: #3a7fc2;  --ramp-4: #5fa0e6;  --ramp-5: #9cc6f4;
+
+  /* ── Typography — Space Grotesk (display/UI) + JetBrains Mono (data) ──
+     Self-hosted in production (see fonts.md). --font-serif retained for
+     contract compatibility; currently unconsumed. */
+  --font-sans:  "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
+
+  /* ── Spacing scale (4px base) — unchanged ── */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px; --s-4: 16px;
+  --s-5: 24px;  --s-6: 32px;  --s-7: 48px; --s-8: 64px;
+  --s-9: 96px;  --s-10: 128px;
+
+  /* ── Radius — nudged up for the softer, modern surfaces ── */
+  --r-1: 6px;   --r-2: 10px;  --r-3: 14px;  --r-4: 20px;  --r-full: 999px;
+
+  /* ── Shadows — softer, cooler. --shadow-1 now consumed (chips/inputs). ── */
+  --shadow-1: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 1px 2px oklch(0.10 0.02 256 / 0.5);
+  --shadow-2: 0 1px 0 oklch(1 0 0 / 0.05) inset, 0 10px 30px oklch(0.06 0.02 256 / 0.55);
+
+  /* ── Layout — unchanged ── */
+  --max-w: 1440px;
+  --gutter: 32px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LIGHT THEME  ·  :root[data-theme="light"]
+   Cool paper (hue 256), deepened accent + categories + trend colours so
+   small text and glyphs clear WCAG AA on light surfaces. Only overrides
+   are listed; everything else inherits the dark defaults above.
+   ───────────────────────────────────────────────────────────── */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* Base — cool off-white paper; --surface lifts ABOVE --bg (inverted) */
+  --bg:           oklch(0.965 0.006 256);
+  --bg-soft:      oklch(0.945 0.007 256);
+  --surface:      oklch(0.995 0.002 256);
+  --surface-2:    oklch(0.945 0.007 256);
+  --surface-3:    oklch(0.915 0.009 256);
+  --border-soft:  oklch(0.900 0.008 256);
+  --border:       oklch(0.840 0.012 256);
+  --border-loud:  oklch(0.740 0.016 256);
+
+  /* Text — dark cool ink. --ink-4 still carries small real text; 0.52 ≈ 4.95:1. */
+  --ink:          oklch(0.240 0.022 256);
+  --ink-2:        oklch(0.400 0.020 256);
+  --ink-3:        oklch(0.500 0.018 256);
+  --ink-4:        oklch(0.520 0.016 256);
+
+  /* Accent — deepened blue so small text clears AA on filled controls,
+     including --surface-3; text on the accent fill uses --bg. */
+  --accent:       oklch(0.500 0.180 256);
+  --accent-soft:  oklch(0.500 0.180 256 / 0.12);
+  --accent-line:  oklch(0.500 0.180 256 / 0.30);
+  --accent-glow:  oklch(0.620 0.170 256);
+
+  --hot:          oklch(0.55 0.20 28);
+  --cool:         oklch(0.55 0.13 222);
+
+  /* Trend — deepened; delta text (e.g. "▼ 9.4%") clears AA (≈4.9:1). */
+  --trend-up:       oklch(0.540 0.160 50);
+  --trend-down:     oklch(0.500 0.135 165);
+  --trend-flat:     oklch(0.500 0.018 256);
+  --trend-up-dim:   oklch(0.540 0.160 50 / 0.12);
+  --trend-down-dim: oklch(0.500 0.135 165 / 0.12);
+
+  /* Categories — small labels must clear text AA on the selected-tab
+     --surface-3, not only graphical contrast on the page background. */
+  --cat-assault:    oklch(0.500 0.150 62);
+  --cat-autoTheft:  oklch(0.470 0.160 232);
+  --cat-breakEnter: oklch(0.520 0.170 322);
+  --cat-robbery:    oklch(0.480 0.150 148);
+  --cat-theftOver:  oklch(0.510 0.160 296);
+  --cat-assault-dim:    oklch(0.500 0.150 62 / 0.12);
+  --cat-autoTheft-dim:  oklch(0.470 0.160 232 / 0.12);
+  --cat-breakEnter-dim: oklch(0.520 0.170 322 / 0.12);
+  --cat-robbery-dim:    oklch(0.480 0.150 148 / 0.12);
+  --cat-theftOver-dim:  oklch(0.510 0.160 296 / 0.12);
+
+  /* Map ramp — light variant: light blue (low) → deep blue (high). */
+  --ramp-0: #dde9f8;  --ramp-1: #b4cfee;  --ramp-2: #84acde;
+  --ramp-3: #5286c9;  --ramp-4: #2f63a8;  --ramp-5: #1c4279;
+
+  /* Shadows — softer, cooler, lower alpha on light. */
+  --shadow-1: 0 1px 2px oklch(0.50 0.03 256 / 0.10);
+  --shadow-2: 0 10px 30px oklch(0.45 0.04 256 / 0.12);
+}

@@ -1,0 +1,108 @@
+---
+// /neighbourhood/ — list view of all 158 neighbourhoods.
+// Pre-renders a minimal per-row data prop, lets the Preact island handle
+// search / sort / category-switch / unit-switch interactivity.
+
+import Site from '../../layouts/Site.astro';
+import NeighbourhoodIndex from '../../components/islands/NeighbourhoodIndex.tsx';
+import NeighbourhoodPicker from '../../components/islands/NeighbourhoodPicker.tsx';
+import LazyMap from '../../components/islands/LazyMap.tsx';
+import ViewRail from '../../components/islands/ViewRail.tsx';
+import {
+  allNeighbourhoods,
+  type NeighbourhoodSummary,
+} from '../../lib/aggregates';
+import { CATEGORIES, type CategoryId } from '../../lib/categories';
+
+// Slim each NeighbourhoodSummary into a compact row for the island.
+// We send the full 10-year series so the sparkline + YoY math stay
+// client-side after first paint; total payload is ~30-50KB gzipped.
+interface SlimRow {
+  id: string;
+  name: string;
+  population: number;
+  series: Record<CategoryId, { counts: number[]; rates: number[] }>;
+}
+
+function slim(n: NeighbourhoodSummary): SlimRow {
+  const series = {} as SlimRow['series'];
+  for (const c of CATEGORIES) {
+    const pts = n.series[c.id];
+    series[c.id] = {
+      counts: pts.map((p) => p.count),
+      rates: pts.map((p) => Math.round(p.rate * 100) / 100),
+    };
+  }
+  return { id: n.id, name: n.name, population: n.population, series };
+}
+
+const rows: SlimRow[] = allNeighbourhoods()
+  .map(slim)
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+
+const pickerOptions = rows.map((r) => ({ id: r.id, name: r.name }));
+---
+<Site
+  title="Toronto Crime Pulse · Neighbourhoods"
+  description="Browse all 158 Toronto neighbourhoods by crime counts or rate per 10,000 residents. Search, sort, and switch categories across a 10-year window."
+  active="neighbourhood"
+  showTopbarUnit={false}
+>
+  <ViewRail
+    client:load
+    slot="rail"
+    scopeHint="Choose a custom combination here; the list sums the selected categories. Use the list's category buttons to show just one category or all five. The map shades the primary category named above it."
+    yearHint="Applies to the list's values, year-over-year arrows, and the map."
+  />
+  <div class="page" data-screen-label="02 Neighbourhood Index">
+    <section>
+      <div class="main" style="padding: 48px 0 24px;">
+        <div class="eyebrow" style="margin-bottom: 12px;">
+          § Pick a neighbourhood · 158 official boundaries
+        </div>
+        <h1 style="font-family: var(--font-sans); font-weight: 600; font-size: clamp(34px, 9vw, 56px); letter-spacing: -0.022em; margin: 0; line-height: 1.05;">
+          Toronto neighbourhoods.
+        </h1>
+        <p style="font-size: 17px; color: var(--ink-2); max-width: 60ch; margin-top: 20px; line-height: 1.55;">
+          A list of all 158. Show one category or the sum of all five with the buttons below; choose a custom combination, unit, or years from the rail above. Year-over-year arrows compare the latest selected year against the one before it.
+        </p>
+        <div style="margin-top: 24px;">
+          <NeighbourhoodPicker
+            client:load
+            options={pickerOptions}
+            variant="hero"
+            placeholder="Jump to a neighbourhood…"
+          />
+        </div>
+      </div>
+    </section>
+
+    {/* Pick on the map — the same clickable choropleth as the Overview; click
+        a polygon to open that neighbourhood. Shaded by the primary category
+        and unit. No hover sidebar here (the list below is the detail). */}
+    <section style="padding: 0 0 32px;">
+      <div class="main">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow section-eye">§ Or pick on the map · click to open</div>
+            <h2 class="section-title">Find it on the map</h2>
+            <p class="section-desc">
+              Each polygon is one of Toronto's 158 neighbourhoods, shaded by the active category. Hover for the name; click to open it. Prefer typing or sorting? Use the search above or the table below.
+            </p>
+          </div>
+        </div>
+        <div class="map-wrap" style="grid-template-columns: 1fr;">
+          <div class="map-canvas" style="border-right: 0;">
+            <LazyMap client:load />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 0 0 64px;">
+      <div class="main">
+        <NeighbourhoodIndex client:load rows={rows} />
+      </div>
+    </section>
+  </div>
+</Site>

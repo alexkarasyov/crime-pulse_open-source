@@ -1,0 +1,169 @@
+---
+// Site-wide layout: brand topbar, optional sticky filter bar, footer.
+// Wraps Base.astro so the design tokens/styles still load.
+//
+// Usage:
+//   <Site title="..." active="overview">
+//     ...page body...
+//   </Site>
+
+import Base from './Base.astro';
+import BrandLockup from '../components/brand/BrandLockup.astro';
+import BrandMark from '../components/brand/BrandMark.astro';
+import UnitToggle from '../components/islands/UnitToggle.tsx';
+import ThemeToggle from '../components/islands/ThemeToggle.tsx';
+import UrlSync from '../components/islands/UrlSync.tsx';
+import { generatedAt, dataThrough, dataImportedAt } from '../lib/aggregates';
+import { YEAR_MIN, YEAR_MAX } from '../lib/state';
+import { CATEGORIES } from '../lib/categories';
+import pkg from '../../package.json';
+
+// Single source of truth for the displayed version (package.json).
+const appVersion = pkg.version;
+
+type ActiveRoute = 'overview' | 'neighbourhood' | 'compare' | 'about' | 'dev';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  active?: ActiveRoute;
+  /** Hide the topbar unit toggle — for pages whose own rail (slot="rail")
+   *  owns the unit control, so it isn't duplicated. */
+  showTopbarUnit?: boolean;
+  /** Emit noindex + skip canonical (used by the 404 page). */
+  noindex?: boolean;
+  /** JSON-LD nodes forwarded to Base (see src/lib/schema.ts). */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title = 'Toronto Crime Pulse',
+  description,
+  ogImage,
+  active = 'overview',
+  showTopbarUnit = true,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+// In dev builds (INCLUDE_DEV_ROUTES=1) surface a small DEV indicator that
+// links to the otherwise-unreachable /project and /styleguide routes. We read
+// process.env directly (Astro frontmatter runs in Node at build) — the same
+// check astro.config.mjs uses to inject the routes — so the pill and the
+// routes are always in lockstep. Unset in prod, so it never ships publicly.
+const showDevRoutes = process.env.INCLUDE_DEV_ROUTES === '1';
+
+// Freshness: the honest user-facing numbers are when the TPS corpus was
+// imported and the latest report date it covers — NOT generated_at, which
+// advances on any local aggregate rerun without new data.
+const builtAt = generatedAt().slice(0, 10);
+const through = dataThrough();
+const importedAt = dataImportedAt();
+
+// `short` swaps in on narrow screens (see the 700px breakpoint in base.css).
+const NAV: Array<{ id: ActiveRoute; label: string; short?: string; n: string; href: string }> = [
+  { id: 'overview',      label: 'Overview',       n: '01', href: '/' },
+  { id: 'neighbourhood', label: 'Neighbourhood',  n: '02', href: '/neighbourhood/' },
+  { id: 'compare',       label: 'Compare',        n: '03', href: '/compare/' },
+  { id: 'about',         label: 'About the data', short: 'About', n: '04', href: '/about/' },
+];
+---
+<Base title={title} description={description} ogImage={ogImage} noindex={noindex} jsonLd={jsonLd}>
+  <div class="app">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class={`topbar ${active === 'compare' ? 'mobile-unit-visible' : ''}`}>
+      <div class="topbar-inner">
+        <BrandLockup href="/" />
+        <span class="topbar-divider" />
+        <nav class="nav" aria-label="Primary">
+          {NAV.map((item) => (
+            <a
+              href={item.href}
+              class={`nav-item ${active === item.id ? 'active' : ''}`}
+              aria-current={active === item.id ? 'page' : undefined}
+            >
+              <span class="nav-num">{item.n}</span>
+              {item.short ? (
+                <>
+                  <span class="nav-label-full">{item.label}</span>
+                  <span class="nav-label-short">{item.short}</span>
+                </>
+              ) : (
+                item.label
+              )}
+            </a>
+          ))}
+        </nav>
+        <div class="topbar-spacer" />
+        <div class="topbar-meta">
+          {showDevRoutes && (
+            <span class="dev-pill" title="Dev-only routes (INCLUDE_DEV_ROUTES=1), not in prod builds">
+              DEV
+              <a href="/project">project</a>
+              <a href="/styleguide">styleguide</a>
+            </span>
+          )}
+          <div class="sync-pill" title={`Data through ${through} · imported ${importedAt} · site built ${builtAt}`}>
+            <span class="sync-dot" />
+            <span class="label">DATA THROUGH</span>
+            <span>{through}</span>
+          </div>
+          {showTopbarUnit && <UnitToggle client:load />}
+          <ThemeToggle client:load />
+        </div>
+      </div>
+    </header>
+
+    <UrlSync client:load />
+    <slot name="rail" />
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h2>Crime Pulse</h2>
+          <p>{YEAR_MAX - YEAR_MIN + 1} years of TPS data — incident counts, with per-10K rates on toggle — across 158 Toronto neighbourhoods.</p>
+          <p style="margin-top: 12px; color: var(--accent); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;">
+            ◇ Independent · Open methodology · No ads
+          </p>
+        </div>
+        <div class="footer-col">
+          <h2>Sources</h2>
+          <ul>
+            <li>Toronto Police Service · Community Safety Indicators</li>
+            <li>Toronto Neighbourhood Profiles · 2021 Census</li>
+            <li>Statistics Canada · City of Toronto CSD estimates</li>
+            <li>StatCan 35-10-0026-01 · Crime Severity Index</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2>Methodology</h2>
+          <ul>
+            <li><a href="/about/" style="border-bottom: 1px dashed var(--border);">About the data →</a></li>
+            <li>ADR-001 · v1 is Toronto, not GTA</li>
+            <li>ADR-009 · Counts default, rates on toggle</li>
+            <li>ADR-003 · Choropleth, not incident dots</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2>Data current as of</h2>
+          <p style="font-family: var(--font-mono); font-size: 16px; color: var(--ink); margin-top: 8px;">{through}</p>
+          <p style="margin-top: 12px; font-size: 12px;">
+            Source refreshes quarterly. Data covers reports through <span style="color: var(--accent); font-family: var(--font-mono);">{through}</span>, imported <span style="color: var(--accent); font-family: var(--font-mono);">{importedAt}</span>. Updated periodically, no fixed schedule.
+          </p>
+        </div>
+      </div>
+      <div class="footer-credits">
+        <span>CRIME PULSE TORONTO · V{appVersion.toUpperCase()} · {new Date().getFullYear()} · Built by <a href="https://alexkarasyov.com" target="_blank" rel="noopener" style="color: inherit; border-bottom: 1px dashed var(--border);">alexkarasyov.com</a></span>
+        <span style="display: inline-flex; align-items: center; gap: 16px;">
+          <BrandMark size={64} />
+          <span>{YEAR_MIN} – {YEAR_MAX} · 158 neighbourhoods · {CATEGORIES.length} categories</span>
+        </span>
+      </div>
+    </footer>
+  </div>
+</Base>

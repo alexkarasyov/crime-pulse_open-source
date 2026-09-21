@@ -1,0 +1,90 @@
+---
+// Sparkline — static SVG line chart with optional area fill and endpoint dot.
+// Accepts `data` as number[] or {rate:number}[] or {count:number}[].
+// No hover state; no client JS.
+// Ported from styleguide/components.jsx.
+
+type Point = number | { rate?: number; count?: number };
+
+interface Props {
+  data: Point[];
+  color?: string;
+  height?: number;
+  width?: number;
+  fill?: boolean;
+  showDots?: boolean;
+  /** If true, draws a filled endpoint dot. */
+  accent?: boolean;
+  class?: string;
+}
+
+const {
+  data,
+  color = 'currentColor',
+  height = 36,
+  width = 200,
+  fill = false,
+  showDots = false,
+  accent = false,
+  class: className,
+} = Astro.props;
+
+function valueOf(p: Point): number {
+  if (typeof p === 'number') return p;
+  return p.rate ?? p.count ?? 0;
+}
+
+const hasData = Array.isArray(data) && data.length > 0;
+
+let path = '';
+let areaPath = '';
+let points: Array<[number, number]> = [];
+
+if (hasData) {
+  const vals = data.map(valueOf);
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const padY = 4;
+  const span = max - min || 1;
+  const stepX = width / (data.length - 1 || 1);
+  points = vals.map((v, i) => {
+    const x = i * stepX;
+    const y = height - padY - ((v - min) / span) * (height - 2 * padY);
+    return [x, y];
+  });
+  path = points
+    .map((p, i) => (i === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`))
+    .join(' ');
+  areaPath = `${path} L${width},${height} L0,${height} Z`;
+}
+---
+<svg
+  class={`sparkline ${className ?? ''}`}
+  viewBox={`0 0 ${width} ${height}`}
+  preserveAspectRatio="none"
+  width={width}
+  height={height}
+>
+  {hasData && fill && <path d={areaPath} fill={color} opacity="0.12" />}
+  {hasData && (
+    <path
+      d={path}
+      fill="none"
+      stroke={color}
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  )}
+  {hasData && showDots && points.map((p) => (
+    <circle cx={p[0]} cy={p[1]} r="2.5" fill="var(--bg)" stroke={color} stroke-width="1.5" />
+  ))}
+  {hasData && accent && points.length > 0 && (
+    <circle
+      cx={points[points.length - 1]![0]}
+      cy={points[points.length - 1]![1]}
+      r="3"
+      fill={color}
+    />
+  )}
+</svg>

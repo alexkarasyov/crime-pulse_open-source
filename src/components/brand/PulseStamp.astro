@@ -1,0 +1,84 @@
+---
+// PulseStamp — circular editorial stamp.
+// Text wraps around the perimeter ("CRIME PULSE · TORONTO · EVIDENCE LED · V1.0.0").
+// BrandMark sits in the centre. Used as a footer / page accent.
+// Ported from styleguide/brand.jsx.
+
+interface Props {
+  size?: number;
+  color?: string;
+  accent?: string;
+  /** Optional unique id suffix for the path; defaults to a stable hash. */
+  pathId?: string;
+}
+
+const {
+  size = 120,
+  color = 'var(--ink-2)',
+  accent = 'var(--accent)',
+  pathId = 'pulse-stamp',
+} = Astro.props;
+
+const r = size / 2;
+const circR = r - 10;
+const label = 'CRIME  PULSE  ·  TORONTO  ·  EVIDENCE LED  ·  V1.0.0  ·  ';
+const repeated = (label + label).slice(0, 120);
+
+const PULSE_BARS = [0.40, 0.46, 0.50, 0.58, 0.36, 0.52, 0.74, 1.00, 0.78, 0.62];
+const pad = 3;
+const innerW = 24 - pad * 2;
+const innerH = 24 - pad * 2;
+const barW = (innerW - (PULSE_BARS.length - 1) * 0.6) / PULSE_BARS.length;
+
+const bars = PULSE_BARS.map((h, i) => {
+  const x = pad + i * (barW + 0.6);
+  const barH = h * innerH * 0.85;
+  const y = 24 - pad - barH;
+  return {
+    x: x.toFixed(2),
+    y: y.toFixed(2),
+    width: barW.toFixed(2),
+    height: barH.toFixed(2),
+    isPeak: i === 7,
+  };
+});
+---
+<svg
+  width={size}
+  height={size}
+  viewBox={`0 0 ${size} ${size}`}
+  role="img"
+  aria-label="Crime Pulse stamp"
+  style="display: inline-block;"
+>
+  <defs>
+    <path
+      id={pathId}
+      d={`M ${r}, ${r} m -${circR}, 0 a ${circR},${circR} 0 1,1 ${circR * 2},0 a ${circR},${circR} 0 1,1 -${circR * 2},0`}
+      fill="none"
+    />
+  </defs>
+  {/* Outer ring */}
+  <circle cx={r} cy={r} r={r - 2} fill="none" stroke={color} stroke-width="0.5" opacity="0.5" />
+  <circle cx={r} cy={r} r={r - 18} fill="none" stroke={color} stroke-width="0.5" opacity="0.4" />
+  {/* Text along path */}
+  <text
+    fill={color}
+    style="font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.20em; font-weight: 500; text-transform: uppercase;"
+  >
+    <textPath href={`#${pathId}`} startOffset="0">{repeated}</textPath>
+  </text>
+  {/* Inner mark */}
+  <g transform={`translate(${r - 14}, ${r - 14}) scale(${28 / 24})`}>
+    {bars.map((b) => (
+      <rect
+        x={b.x}
+        y={b.y}
+        width={b.width}
+        height={b.height}
+        fill={b.isPeak ? accent : color}
+        opacity={b.isPeak ? 1 : 0.7}
+      />
+    ))}
+  </g>
+</svg>
