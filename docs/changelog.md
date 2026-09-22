@@ -1,5 +1,9 @@
 # Changelog · newest at top
 
+## 2026-09-21
+
+- Dev-only topbar links to `/project/` and `/styleguide/` now include the trailing slash the site requires, so those pages open from the dev server instead of 404.
+
 ## 2026-09-20
 
 - **[P3.0](../project/backlog.md)** — Published this public snapshot with a fresh git history: MIT [`LICENSE`](../LICENSE), data-licence [`NOTICE`](../NOTICE), and a clone-and-build [`README.md`](../README.md) pointing at [crimepulse.ca](https://crimepulse.ca). Crime Markdown is unchanged (including lat/lng). Operator-only Cloudflare `workers.dev` hostnames were dropped. The private source repo was not rewritten. README now covers tests, data-licence table, screenshot, and deploy notes for a first-time clone. The open-source handoff no longer names a local checkout path or the private GitHub slug.
