@@ -1,5 +1,9 @@
 # Changelog · newest at top
 
+## 2026-10-29
+
+- **[P3.1](../project/backlog.md)** — A Compare link whose `cmp` ids are not neighbourhood numbers no longer crashes the comparison; those links keep the default neighbourhoods. Neighbourhood names are encoded before they are written into JSON-LD and map tooltips. npm audit findings in the lockfile are cleared with updates inside the existing version ranges (Astro 7.4.4, devalue 5.9.4).
+
 ## 2026-09-21
 
 - Dev-only topbar links to `/project/` and `/styleguide/` now include the trailing slash the site requires, so those pages open from the dev server instead of 404.

@@ -115,6 +115,20 @@ describe('initUrlSync — hydrating from a shared link', () => {
     expect(url.comparePicks.value).toEqual(url.DEFAULT_COMPARE_PICKS);
   });
 
+  it('rejects compare ids that are not neighbourhood numbers', async () => {
+    const proto = await fresh('?cmp=__proto__,constructor');
+    proto.url.initUrlSync();
+    expect(proto.url.comparePicks.value).toEqual(proto.url.DEFAULT_COMPARE_PICKS);
+
+    const mixed = await fresh('?cmp=87,__proto__,73');
+    mixed.url.initUrlSync();
+    expect(mixed.url.comparePicks.value).toEqual(mixed.url.DEFAULT_COMPARE_PICKS);
+
+    const inherited = await fresh('?cmp=toString,valueOf');
+    inherited.url.initUrlSync();
+    expect(inherited.url.comparePicks.value).toEqual(inherited.url.DEFAULT_COMPARE_PICKS);
+  });
+
   it('rejects a reversed or degenerate year range', async () => {
     const { state, url } = await fresh('?y=2023-2018');
     url.initUrlSync();

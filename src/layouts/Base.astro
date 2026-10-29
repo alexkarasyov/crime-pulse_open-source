@@ -16,6 +16,7 @@ import '@fontsource/jetbrains-mono/500.css';
 import '@fontsource/jetbrains-mono/700.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import { jsonLdScriptBody } from '../lib/schema';
 
 interface Props {
   title?: string;
@@ -87,7 +88,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     <meta name="twitter:image:alt" content={ogAlt} />
 
     {jsonLd.map((node) => (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify(node)} />
+      <script is:inline type="application/ld+json" set:html={jsonLdScriptBody(node)} />
     ))}
 
     {cfBeaconToken && (
