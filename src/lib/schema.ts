@@ -10,6 +10,13 @@ export const SITE_NAME = 'Toronto Crime Pulse';
 
 type JsonLd = Record<string, unknown>;
 
+/** JSON for a `<script type="application/ld+json">` body.
+ * `JSON.stringify` leaves `<` intact, so a value containing `</script>`
+ * would close the element. Neighbourhood names come from the City file. */
+export function jsonLdScriptBody(node: JsonLd): string {
+  return JSON.stringify(node).replace(/</g, '\\u003c');
+}
+
 // Use the same configured site as canonicals, OG metadata, and robots.txt.
 // Astro.site carries SITE_URL overrides from astro.config.mjs at build time.
 function siteUrl(path: string, site: URL | undefined): string {

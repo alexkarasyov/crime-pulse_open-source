@@ -95,6 +95,17 @@ function parseYearRange(raw: string): [number, number] | null {
   return [s, e];
 }
 
+// Neighbourhood ids in the archive are unpadded integers (currently 1–174).
+// Anything else — including built-in property names — is not a pick.
+const NEIGHBOURHOOD_ID = /^\d{1,3}$/;
+
+function parseCompareIds(raw: string): string[] | null {
+  const ids = raw.split(',').map((s) => s.trim()).filter(Boolean);
+  if (ids.length < 2 || ids.length > 4) return null;
+  if (ids.some((id) => !NEIGHBOURHOOD_ID.test(id))) return null;
+  return ids;
+}
+
 /**
  * Apply state from the URL query.
  *
@@ -150,8 +161,8 @@ function hydrateFromUrl(resetAbsent: boolean): void {
   else if (ytd === '0') includeYTD.value = false;
   const cmp = p.get('cmp');
   if (cmp) {
-    const ids = cmp.split(',').map((s) => s.trim()).filter(Boolean);
-    if (ids.length >= 2 && ids.length <= 4) comparePicks.value = ids;
+    const ids = parseCompareIds(cmp);
+    if (ids) comparePicks.value = ids;
   }
   const cb = p.get('cb');
   if (cb && /^[01]{2}$/.test(cb)) {

@@ -50,6 +50,25 @@ const COMPARE_COLORS = [
 
 const MAX_PICKS = 4;
 
+/** Keep only real neighbourhood records. Bracket access would also match
+ * inherited names (`constructor`, `__proto__`, `toString`) and then crash
+ * when the screen reads `series` / `population` on those values. */
+export function resolveComparePicks<T>(
+  neighbourhoods: Record<string, T>,
+  ids: readonly string[],
+): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const id of ids) {
+    if (seen.has(id) || !Object.hasOwn(neighbourhoods, id)) continue;
+    const neighbourhood = neighbourhoods[id];
+    if (!neighbourhood) continue;
+    seen.add(id);
+    out.push(neighbourhood);
+  }
+  return out;
+}
+
 export default function CompareScreen() {
   const [agg, setAgg] = useState<RawByNeighbourhoodYear | null>(null);
   const [totals, setTotals] = useState<RawTorontoByYear | null>(null);
@@ -90,17 +109,7 @@ export default function CompareScreen() {
   // possibly-stale `pickIds` from the URL.
   const picks = useMemo(() => {
     if (!agg) return [] as RawNeighbourhoodYear[];
-    const seen = new Set<string>();
-    const out: RawNeighbourhoodYear[] = [];
-    for (const id of pickIds) {
-      if (seen.has(id)) continue;
-      const n = agg.neighbourhoods[id];
-      if (n) {
-        seen.add(id);
-        out.push(n);
-      }
-    }
-    return out;
+    return resolveComparePicks(agg.neighbourhoods, pickIds);
   }, [agg, pickIds]);
 
   // All 158 neighbourhood {id, name}s for the native <select> dropdowns —

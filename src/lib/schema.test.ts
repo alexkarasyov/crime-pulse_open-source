@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { datasetSchema, neighbourhoodBreadcrumbs, webSiteSchema } from './schema';
+import { datasetSchema, jsonLdScriptBody, neighbourhoodBreadcrumbs, webSiteSchema } from './schema';
 
 vi.mock('./aggregates', () => ({
   dataImportedAt: () => '2026-08-30',
@@ -21,5 +21,15 @@ describe('structured-data site URLs', () => {
     expect((breadcrumbs.itemListElement as Array<{ item: string }>).map((entry) => entry.item))
       .toEqual([`${origin}/`, `${origin}/neighbourhood/`, `${origin}/neighbourhood/73/`]);
     expect(dataset.sameAs).toBe('https://data.torontopolice.on.ca/');
+  });
+});
+
+describe('jsonLdScriptBody', () => {
+  it('escapes angle brackets so the value cannot close the script element', () => {
+    const body = jsonLdScriptBody(
+      neighbourhoodBreadcrumbs('73', '</script><script>alert(1)</script>', undefined),
+    );
+    expect(body).not.toContain('<');
+    expect(body).toContain('\\u003c/script>');
   });
 });

@@ -303,6 +303,13 @@ release blockers.
 **Done when**: A new repo folder exists (not a rewrite of this `.git`); `LICENSE` and `NOTICE` are in the first commit; `npm run build` works; this private repo is left alone.
 **Result**: Public snapshot lives in this repository (`alexkarasyov/crime-pulse_open-source`). MIT `LICENSE`, data `NOTICE`, and a clone-and-build `README.md` are in the first commit. Crime Markdown is unchanged, including lat/lng. The private `alexkarasyov/crime-pulse` history and remotes were not rewritten.
 
+### P3.1 · Fix the Compare crash and encode external names
+**Status**: done (2026-10-29)
+**What**: Ignore Compare `cmp` values that are not 1–3 digit neighbourhood ids, resolve picks only from the aggregate's own properties, encode JSON-LD for `<script>` bodies, and HTML-encode Leaflet tooltip names. Refresh the lockfile for npm audit findings that fit the existing version ranges.
+**Why**: A shared Compare link could throw while rendering, and neighbourhood names from the City boundary file were inserted into HTML sinks that do not escape the way the rest of the UI does.
+**Done when**: Opening Compare with a non-numeric `cmp` list shows the default neighbourhoods and no uncaught error; JSON-LD contains no raw `<`; `npm test` and `npm run build` pass; `npm audit` reports no vulnerabilities.
+**Result**: Confirmed the crash on inherited property names, then rejected those ids and encoded the two HTML sinks. Lockfile updates stay inside the declared ranges (Astro 7.4.4, devalue 5.9.4). `npm audit` is clean.
+
 ## Parking lot
 
 ### Vaughan / York Regional Police extension — **parked**

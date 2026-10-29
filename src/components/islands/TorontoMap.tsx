@@ -22,6 +22,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { primaryCat, unit, showYoyArrows, yearRange } from '../../lib/state';
 import { catValueAt, guardedChange } from '../../lib/format';
 import { fetchJson } from '../../lib/fetchJson';
+import { escapeHtml } from '../../lib/html';
 import { type RawByNeighbourhoodYear, asByNeighbourhoodYear } from '../../lib/aggregateTypes';
 import { THEME_CHANGE_EVENT } from '../../lib/theme';
 // Hover signal lives in lib/ so it reliably shares across separately-hydrated
@@ -252,7 +253,7 @@ export default function TorontoMap({ selectedId, silentHover = false }: Props) {
               }
             },
           });
-          lyr.bindTooltip(props.name, {
+          lyr.bindTooltip(escapeHtml(props.name ?? ''), {
             sticky: true,
             direction: 'top',
             className: 'leaflet-cp-tooltip',
